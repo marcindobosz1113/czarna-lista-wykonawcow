@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Button, Form, Input, type FormProps } from 'antd'
 import { useRegister } from '../hooks/auth/register'
+import { router } from '../app/router'
 
 export const Route = createFileRoute('/register')({
   component: RouteComponent,
@@ -24,7 +25,7 @@ function RouteComponent() {
       },
       {
         onSuccess: () => {
-          console.log('Użytkownik utworzony')
+          router.navigate({ to: '/' })
         },
         onError: (err) => {
           console.error('Błąd:', err.message)
@@ -42,7 +43,7 @@ function RouteComponent() {
   return (
     <Form
       name="basic"
-      labelCol={{ span: 4 }}
+      labelCol={{ span: 6 }}
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}
       initialValues={{ remember: true }}
@@ -52,21 +53,33 @@ function RouteComponent() {
       <Form.Item<FieldType>
         label="Email"
         name="email"
-        rules={[{ required: true, message: 'Podaj adres e-mail' }]}
+        rules={[
+          { required: true, message: 'Podaj adres e-mail' },
+          {
+            type: 'email',
+            message: 'Podaj prawidłowy adres email',
+          },
+        ]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item<FieldType>
-        label="Username"
+        label="Nazwa użytkownika"
         name="username"
-        rules={[{ required: true, message: 'Podaj nazwę użytkownika' }]}
+        rules={[
+          { required: true, message: 'Podaj nazwę użytkownika' },
+          {
+            min: 3,
+            message: 'Nazwa użytkownika jest za krótka',
+          },
+        ]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item<FieldType>
-        label="Password"
+        label="Hasło"
         name="password"
         rules={[{ required: true, message: 'Podaj hasło' }]}
       >
@@ -74,7 +87,7 @@ function RouteComponent() {
       </Form.Item>
 
       <Form.Item label={null}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={register.isPending}>
           Submit
         </Button>
       </Form.Item>
