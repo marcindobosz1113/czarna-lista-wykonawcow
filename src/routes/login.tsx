@@ -24,7 +24,6 @@ function RouteComponent() {
       },
       {
         onSuccess: (data) => {
-          console.log(data)
           if (values.remember) {
             localStorage.setItem('token', data.token)
           }
