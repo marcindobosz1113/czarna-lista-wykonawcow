@@ -1,7 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { Button, Checkbox, Form, Input, type FormProps } from 'antd'
 import { useLogin } from '../hooks/auth/login'
 import { router } from '../app/router'
+import { useAuth } from '../store/auth'
 
 type FieldType = {
   email: string
@@ -10,6 +11,13 @@ type FieldType = {
 }
 
 export const Route = createFileRoute('/login')({
+  beforeLoad: () => {
+    const isLoggedIn = !!useAuth.getState().token
+
+    if (isLoggedIn) {
+      throw redirect({ to: '/' })
+    }
+  },
   component: RouteComponent,
 })
 
@@ -56,13 +64,16 @@ function RouteComponent() {
       <Form.Item<FieldType>
         label="Email"
         name="email"
-        rules={[{ required: true, message: 'Podaj nazwę użytkownika' }]}
+        rules={[
+          { required: true, message: 'Podaj adres email' },
+          { type: 'email', message: 'Podaj prawidłowy adres email' },
+        ]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item<FieldType>
-        label="Password"
+        label="Hasło"
         name="password"
         rules={[{ required: true, message: 'Podaj hasło' }]}
       >

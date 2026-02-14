@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
+import { message } from 'antd'
 import { useAuth } from '../../store/auth'
 import { api } from '../../api/client'
 import type { LoginPayload, LoginResponse } from '../../types/auth'
@@ -14,6 +15,9 @@ export const useLogin = () => {
     onSuccess: (data) => {
       setToken(data.token)
       setUser(data.user)
+    },
+    onError: (error) => {
+      message.error(error.message)
     },
   })
 }

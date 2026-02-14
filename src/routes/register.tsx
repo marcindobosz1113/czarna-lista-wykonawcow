@@ -1,9 +1,17 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { Button, Form, Input, type FormProps } from 'antd'
 import { useRegister } from '../hooks/auth/register'
 import { router } from '../app/router'
+import { useAuth } from '../store/auth'
 
 export const Route = createFileRoute('/register')({
+  beforeLoad: () => {
+    const isLoggedIn = !!useAuth.getState().token
+
+    if (isLoggedIn) {
+      throw redirect({ to: '/' })
+    }
+  },
   component: RouteComponent,
 })
 
@@ -88,7 +96,7 @@ function RouteComponent() {
 
       <Form.Item label={null}>
         <Button type="primary" htmlType="submit" loading={register.isPending}>
-          Submit
+          Zarejestruj
         </Button>
       </Form.Item>
     </Form>

@@ -1,5 +1,4 @@
-import { create } from 'zustand'
-
+import { createStore } from './createStore'
 interface AuthState {
   token: string | null
   user: {
@@ -13,12 +12,15 @@ interface AuthState {
   logout: () => void
 }
 
-export const useAuth = create<AuthState>((set) => ({
-  token: null,
-  user: null,
+export const useAuth = createStore<AuthState>(
+  (set) => ({
+    token: null,
+    user: null,
 
-  setToken: (token) => set({ token }),
-  setUser: (user) => set({ user }),
-
-  logout: () => set({ token: null, user: null }),
-}))
+    setToken: (token) => set({ token }),
+    setUser: (user) => set({ user }),
+    logout: () => set({ token: null, user: null }),
+  }),
+  'AuthStore',
+  true
+)

@@ -1,0 +1,12 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  background: #f0f4f7;
+  margin-top: 10rem;
+}
