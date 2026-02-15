@@ -1,6 +1,5 @@
 import { Button, Form, Input, type FormProps } from 'antd'
-import { useRegister } from '../../hooks/auth/register'
-import { router } from '../../app/router'
+import { useRegister } from '../../hooks/auth/useRegister'
 import styles from './registerPanel.module.scss'
 import { Link } from '@tanstack/react-router'
 
@@ -8,33 +7,18 @@ type FieldType = {
   email: string
   username: string
   password: string
+  repeatPassword: string
 }
 
 export const RegisterPanel = () => {
   const register = useRegister()
 
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    register.mutate(
-      {
-        email: values.email,
-        username: values.username,
-        password: values.password,
-      },
-      {
-        onSuccess: () => {
-          router.navigate({ to: '/' })
-        },
-        onError: (err) => {
-          console.error('Błąd:', err.message)
-        },
-      }
-    )
-  }
-
-  const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (
-    errorInfo
-  ) => {
-    console.log('Failed:', errorInfo)
+    register.mutate({
+      email: values.email,
+      username: values.username,
+      password: values.password,
+    })
   }
 
   return (
@@ -45,7 +29,6 @@ export const RegisterPanel = () => {
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
         className={styles.form}
       >
         <Form.Item<FieldType>
@@ -69,7 +52,7 @@ export const RegisterPanel = () => {
             { required: true, message: 'Podaj nazwę użytkownika' },
             {
               min: 3,
-              message: 'Nazwa użytkownika jest za krótka',
+              message: 'Nazwa użytkownika jest za krótka, min. 3 znaki',
             },
           ]}
         >
@@ -79,7 +62,36 @@ export const RegisterPanel = () => {
         <Form.Item<FieldType>
           label="Hasło"
           name="password"
-          rules={[{ required: true, message: 'Podaj hasło' }]}
+          rules={[
+            { required: true, message: 'Podaj hasło' },
+            {
+              min: 8,
+              message: 'Hasło musi mieć conajmniej 8 znaków',
+            },
+            {
+              pattern: /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-={}[\]|:;"'<>,.?/]).+$/,
+              message:
+                'Hasło musi zawierać jedną dużą literę i jeden znak specjalny',
+            },
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item<FieldType>
+          label="Powtórz hasło"
+          name="repeatPassword"
+          rules={[
+            { required: true, message: 'Podaj hasło' },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('password') === value) {
+                  return Promise.resolve()
+                }
+                return Promise.reject('Hasła muszą być takie same')
+              },
+            }),
+          ]}
         >
           <Input.Password />
         </Form.Item>

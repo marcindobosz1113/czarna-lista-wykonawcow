@@ -4,14 +4,20 @@ export const api = {
   get: async <T>(url: string): Promise<T> => {
     const token = useAuth.getState().token
 
-    const res = await fetch(import.meta.env.VITE_API_URL + url, {
+    const response = await fetch(import.meta.env.VITE_API_URL + url, {
       headers: {
         Authorization: token ? `Bearer ${token}` : '',
       },
     })
 
-    if (!res.ok) throw new Error('API error')
-    return res.json()
+    if (response.status === 401) {
+      localStorage.removeItem('token')
+      useAuth.getState().logout()
+    }
+
+    if (!response.ok) throw new Error('API error')
+
+    return response.json()
   },
 
   post: async <TResponse, TBody>(
@@ -31,7 +37,15 @@ export const api = {
 
     if (!res.ok) {
       const error = await res.json().catch(() => ({}))
-      throw new Error(error.message || 'API error')
+
+      let errorMessage = error.message
+
+      if (error.errors) {
+        errorMessage = Object.values(error.errors)[0]
+        console.log(errorMessage)
+      }
+
+      throw new Error(errorMessage || 'API error')
     }
 
     return res.json()

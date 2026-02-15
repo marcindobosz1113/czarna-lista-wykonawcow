@@ -1,4 +1,4 @@
-import { Avatar, Dropdown, Input, Space, type MenuProps } from 'antd'
+import { Avatar, Dropdown, Input, message, Space, type MenuProps } from 'antd'
 import { Outlet, useRouterState } from '@tanstack/react-router'
 import { useAuth } from '../../store/auth'
 import { router } from '../../app/router'
@@ -17,6 +17,11 @@ export const Menu = () => {
 
   const showSearch = pathname !== '/login' && pathname !== '/register'
 
+  const onLogout = () => {
+    logout()
+    message.success('Zostałeś wylogowany')
+  }
+
   const navigateToLogin = () => {
     router.navigate({ to: '/login' })
   }
@@ -28,7 +33,7 @@ export const Menu = () => {
   const loggedUserDropdownItems: MenuProps['items'] = [
     {
       key: 1,
-      label: <ButtonTransparent onClick={logout}>Wyloguj</ButtonTransparent>,
+      label: <ButtonTransparent onClick={onLogout}>Wyloguj</ButtonTransparent>,
     },
   ]
 

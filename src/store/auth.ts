@@ -1,5 +1,6 @@
 import { createStore } from './createStore'
-interface AuthState {
+
+export interface AuthState {
   token: string | null
   user: {
     id: string
@@ -25,5 +26,5 @@ export const useAuth = createStore<AuthState>(
     },
   }),
   'AuthStore',
-  true
+  { shouldPersist: true }
 )

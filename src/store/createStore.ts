@@ -1,14 +1,18 @@
 import { create, type StateCreator } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
+interface Options {
+  shouldPersist?: boolean
+}
+
 export function createStore<T>(
   initializer: StateCreator<T, [], []>,
   name: string,
-  shouldPersist?: boolean
+  options?: Options
 ) {
   const isDev = import.meta.env.DEV
 
-  if (shouldPersist) {
+  if (options?.shouldPersist) {
     const persisted = persist(initializer, { name })
 
     if (isDev) {
