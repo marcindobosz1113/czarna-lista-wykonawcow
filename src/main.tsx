@@ -13,8 +13,13 @@ createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <ConfigProvider
         theme={{
+          components: {
+            Button: {
+              boxShadow: 'none',
+            },
+          },
           token: {
-            colorPrimary: '#383eff',
+            colorPrimary: '#111827',
           },
         }}
       >
