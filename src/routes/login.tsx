@@ -1,14 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import { Button, Checkbox, Form, Input, type FormProps } from 'antd'
-import { useLogin } from '../hooks/auth/login'
-import { router } from '../app/router'
 import { useAuth } from '../store/auth'
-
-type FieldType = {
-  email: string
-  password: string
-  remember?: string
-}
+import { LoginPanel } from '../layout/loginPanel/LoginPanel'
 
 export const Route = createFileRoute('/login')({
   beforeLoad: () => {
@@ -18,81 +10,5 @@ export const Route = createFileRoute('/login')({
       throw redirect({ to: '/' })
     }
   },
-  component: RouteComponent,
+  component: LoginPanel,
 })
-
-function RouteComponent() {
-  const login = useLogin()
-
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    login.mutate(
-      {
-        email: values.email,
-        password: values.password,
-      },
-      {
-        onSuccess: (data) => {
-          if (values.remember) {
-            localStorage.setItem('token', data.token)
-          }
-          router.navigate({ to: '/' })
-        },
-        onError: (err) => {
-          console.error('Błąd:', err.message)
-        },
-      }
-    )
-  }
-
-  const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (
-    errorInfo
-  ) => {
-    console.log('Failed:', errorInfo)
-  }
-
-  return (
-    <Form
-      name="basic"
-      labelCol={{ span: 4 }}
-      wrapperCol={{ span: 16 }}
-      style={{ maxWidth: 600 }}
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
-      <Form.Item<FieldType>
-        label="Email"
-        name="email"
-        rules={[
-          { required: true, message: 'Podaj adres email' },
-          { type: 'email', message: 'Podaj prawidłowy adres email' },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item<FieldType>
-        label="Hasło"
-        name="password"
-        rules={[{ required: true, message: 'Podaj hasło' }]}
-      >
-        <Input.Password />
-      </Form.Item>
-
-      <Form.Item<FieldType>
-        name="remember"
-        valuePropName="checked"
-        label={null}
-      >
-        <Checkbox>Nie wylogowuj</Checkbox>
-      </Form.Item>
-
-      <Form.Item label={null}>
-        <Button type="primary" htmlType="submit">
-          Zaloguj
-        </Button>
-      </Form.Item>
-    </Form>
-  )
-}
