@@ -1,6 +1,7 @@
-@use '../../styles/variables.scss' as *;
+@use '../../../styles/variables.scss' as *;
 
 .menu {
+  z-index: 999;
   position: fixed;
   top: 0;
   width: 100%;
@@ -9,13 +10,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0px 20px 10px -25px $box-shadow-color;
+  box-shadow: 0 2rem 1rem -2.5rem $box-shadow-color;
+  padding: 0 1rem;
 }
 
 .menuContent {
   width: 100%;
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: 120rem;
   display: flex;
   align-items: center;
   justify-content: space-between;

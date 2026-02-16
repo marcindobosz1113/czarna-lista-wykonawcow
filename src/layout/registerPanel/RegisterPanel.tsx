@@ -25,8 +25,6 @@ export const RegisterPanel = () => {
     <div className={styles.formContainer}>
       <Form
         name="basic"
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
         className={styles.form}

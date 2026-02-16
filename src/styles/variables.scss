@@ -6,4 +6,13 @@ $primary: #111827;
 $box-shadow-color: rgba(66, 68, 90, 1);
 
 // sizes
-$menu-height: 10rem;
+$menu-height: 8rem;
+
+// breakpoints
+$breakpoints: (
+  xs: 480,
+  sm: 768,
+  md: 992,
+  lg: 1200,
+  xl: 1600,
+);

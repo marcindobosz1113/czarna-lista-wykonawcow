@@ -2,7 +2,7 @@ import { RouterProvider } from '@tanstack/react-router'
 import { router } from './app/router.ts'
 import { ConfigProvider } from 'antd'
 import { useAuth } from './store/auth.ts'
-import { useMe } from './hooks/auth/useMe.tsx'
+import { useMe } from './hooks/auth/useMe'
 
 export const App = () => {
   const setUser = useAuth((s) => s.setUser)
