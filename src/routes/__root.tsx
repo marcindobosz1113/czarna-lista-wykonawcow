@@ -1,7 +1,14 @@
-import { createRootRoute } from '@tanstack/react-router'
+import { createRootRoute, Outlet } from '@tanstack/react-router'
 
 import { Menu } from '../layout/menu/Menu'
 
 export const Route = createRootRoute({
-  component: Menu,
+  component: () => {
+    return (
+      <>
+        <Menu />
+        <Outlet />
+      </>
+    )
+  },
 })

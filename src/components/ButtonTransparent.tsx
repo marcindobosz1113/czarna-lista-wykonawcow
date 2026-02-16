@@ -1,5 +1,6 @@
 interface ButtonTransparentProps {
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+  className?: string
   children: React.ReactNode
 }
 
@@ -13,10 +14,11 @@ const styles = {
 
 export const ButtonTransparent = ({
   onClick,
+  className,
   children,
 }: ButtonTransparentProps) => {
   return (
-    <button onClick={onClick} style={styles}>
+    <button onClick={onClick} style={styles} className={className}>
       {children}
     </button>
   )
