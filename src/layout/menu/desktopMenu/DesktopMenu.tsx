@@ -11,8 +11,6 @@ import {
   notloggedUserDropdownItems,
 } from '../dropdownItems'
 
-const { Search } = Input
-
 export const DesktopMenu = () => {
   const pathname = useRouterState().location.pathname
   const isLoggedIn = useAuth((state) => !!state.token)
@@ -36,7 +34,7 @@ export const DesktopMenu = () => {
           </button>
 
           {showSearch && (
-            <Search
+            <Input.Search
               placeholder="Wyszukaj wykonawcę"
               allowClear
               size="large"

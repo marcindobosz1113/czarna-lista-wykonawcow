@@ -23,13 +23,14 @@ export const LoginPanel = () => {
   return (
     <div className={styles.formContainer}>
       <Form
-        name="basic"
+        name="login"
         initialValues={{ remember: true }}
         onFinish={onFinish}
         autoComplete="off"
         className={styles.form}
       >
         <Form.Item<FieldType>
+          layout="vertical"
           label="Email"
           name="email"
           rules={[
@@ -41,6 +42,7 @@ export const LoginPanel = () => {
         </Form.Item>
 
         <Form.Item<FieldType>
+          layout="vertical"
           label="Hasło"
           name="password"
           rules={[{ required: true, message: 'Podaj hasło' }]}

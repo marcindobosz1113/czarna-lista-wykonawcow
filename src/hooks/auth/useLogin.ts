@@ -13,13 +13,12 @@ export const useLogin = () => {
     mutationFn: (data: LoginPayload) =>
       api.post<LoginResponse, LoginPayload>('/auth/login', data),
 
-    onSuccess: (data, payload) => {
+    onSuccess: (data) => {
       setToken(data.token)
       setUser(data.user)
 
-      if (payload.remember) {
-        localStorage.setItem('token', data.token)
-      }
+      localStorage.setItem('token', data.token)
+
       router.navigate({ to: '/' })
     },
     onError: (error) => {
