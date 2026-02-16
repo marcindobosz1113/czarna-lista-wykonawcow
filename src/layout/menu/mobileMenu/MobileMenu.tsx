@@ -18,8 +18,6 @@ import { CloseOutlined, MenuOutlined, UserOutlined } from '@ant-design/icons'
 import { ButtonTransparent } from '../../../components/ButtonTransparent'
 import { LoggedUserMenuItems, notLoggedUserMenuItems } from '../menuItems'
 
-const { Search } = Input
-
 export const MobileMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -95,7 +93,7 @@ export const MobileMenu = () => {
 
         {showSearch && (
           <Col span={16}>
-            <Search
+            <Input.Search
               placeholder="Wyszukaj wykonawcę"
               allowClear
               size="large"

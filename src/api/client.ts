@@ -26,13 +26,15 @@ export const api = {
   ): Promise<TResponse> => {
     const token = useAuth.getState().token
 
+    const isFormData = body instanceof FormData
+
     const res = await fetch(import.meta.env.VITE_API_URL + url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
         Authorization: token ? `Bearer ${token}` : '',
       },
-      body: JSON.stringify(body),
+      body: isFormData ? body : JSON.stringify(body),
     })
 
     if (!res.ok) {
@@ -42,7 +44,6 @@ export const api = {
 
       if (error.errors) {
         errorMessage = Object.values(error.errors)[0]
-        console.log(errorMessage)
       }
 
       throw new Error(errorMessage || 'API error')

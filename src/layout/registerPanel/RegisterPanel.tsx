@@ -24,12 +24,14 @@ export const RegisterPanel = () => {
   return (
     <div className={styles.formContainer}>
       <Form
-        name="basic"
+        name="register"
         initialValues={{ remember: true }}
         onFinish={onFinish}
+        wrapperCol={{ span: 24 }}
         className={styles.form}
       >
         <Form.Item<FieldType>
+          layout="vertical"
           label="Email"
           name="email"
           rules={[
@@ -44,6 +46,7 @@ export const RegisterPanel = () => {
         </Form.Item>
 
         <Form.Item<FieldType>
+          layout="vertical"
           label="Nazwa użytkownika"
           name="username"
           rules={[
@@ -58,6 +61,7 @@ export const RegisterPanel = () => {
         </Form.Item>
 
         <Form.Item<FieldType>
+          layout="vertical"
           label="Hasło"
           name="password"
           rules={[
@@ -77,6 +81,7 @@ export const RegisterPanel = () => {
         </Form.Item>
 
         <Form.Item<FieldType>
+          layout="vertical"
           label="Powtórz hasło"
           name="repeatPassword"
           rules={[
