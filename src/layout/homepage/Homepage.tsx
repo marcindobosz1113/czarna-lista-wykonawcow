@@ -1,50 +1,33 @@
 import { useState } from 'react'
-import { Col, Modal, Row } from 'antd'
+import { Button, Col, Modal, Row } from 'antd'
 
 import styles from './homepage.module.scss'
-import { NewPostForm } from './NewPostForm'
-
-const posts_mock = [
-  {
-    label: 'jakiś post',
-  },
-  {
-    label: 'jakiś post',
-  },
-  {
-    label: 'jakiś post',
-  },
-  {
-    label: 'jakiś post',
-  },
-  {
-    label: 'jakiś post',
-  },
-]
+import { NewPostForm } from './newPostForm/NewPostForm'
+import { useGetPosts } from '@/hooks/posts/useGetPosts'
+import { PostCard } from '@/layout/homepage/postCard/PostCard'
 
 export const Homepage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const addNewPost = () => {}
+  const { data: posts } = useGetPosts()
 
   return (
     <Row className={styles.homepageContainer}>
       <Col span={24}>
-        <Row justify="center">
-          <div
-            role="button"
+        <Row justify="start">
+          <Button
+            type="primary"
             onClick={() => setIsModalOpen(true)}
-            className={styles.addNewPostButton}
+            size="large"
           >
-            Dodaj nowy post...
-          </div>
+            Dodaj post
+          </Button>
 
           <Modal
-            title="Dodaj nowy post"
+            title="Zgłoś wykonawcę"
             centered
             open={isModalOpen}
             confirmLoading={false}
-            onOk={addNewPost}
             onCancel={() => setIsModalOpen(false)}
             okText="Dodaj"
             cancelText="Anuluj"
@@ -66,8 +49,8 @@ export const Homepage = () => {
 
       <Col span={24}>
         <Row className={styles.postsContainer} justify="center">
-          {posts_mock.map((item) => (
-            <Row justify="center">{item.label}</Row>
+          {posts?.map((post) => (
+            <PostCard post={post} />
           ))}
         </Row>
       </Col>

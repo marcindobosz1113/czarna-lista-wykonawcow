@@ -1,10 +1,6 @@
-@use '../../styles/variables.scss' as *;
+@use '@/styles/variables.scss' as *;
 
 .formContainer {
-  background-image: url('../../assets/tools-bg.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -17,20 +13,20 @@
   flex-direction: column;
   justify-content: center;
   margin-top: 10rem;
-  box-shadow: 0px 0px 10px 1px $box-shadow-color;
+  box-shadow: $container-box-shadow;
   border-radius: 0.8rem;
   padding: 2.4rem 2rem 2.4rem;
   width: 90%;
 
   @media (min-width: 768px) {
-    width: 70%;
+    width: 60%;
   }
 
   @media (min-width: 1200px) {
-    width: 40%;
+    width: 50%;
   }
 
   @media (min-width: 1600px) {
-    width: 30%;
+    width: 50%;
   }
 }

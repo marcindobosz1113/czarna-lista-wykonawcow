@@ -22,7 +22,7 @@ export const App = () => {
           },
         },
         token: {
-          colorPrimary: '#111827',
+          colorPrimary: '#34495e',
         },
       }}
     >
