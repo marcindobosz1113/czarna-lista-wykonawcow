@@ -59,6 +59,7 @@ export const ImagesUploader = ({
         fileList={fileList}
         onPreview={handlePreview}
         onChange={handleChange}
+        accept="image/*"
       >
         {fileList.length >= 8 ? null : uploadButton}
       </Upload>

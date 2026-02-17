@@ -10,13 +10,13 @@ import {
   type MenuProps,
 } from 'antd'
 import { useRouterState } from '@tanstack/react-router'
-import { useAuth } from '../../../store/auth'
-import { router } from '../../../app/router'
 import type { SearchProps } from 'antd/es/input'
 import styles from './mobileMenu.module.scss'
 import { CloseOutlined, MenuOutlined, UserOutlined } from '@ant-design/icons'
-import { ButtonTransparent } from '../../../components/ButtonTransparent'
 import { LoggedUserMenuItems, notLoggedUserMenuItems } from '../menuItems'
+import { useAuth } from '@/store/auth'
+import { router } from '@/app/router'
+import { ButtonTransparent } from '@/components/ButtonTransparent'
 
 export const MobileMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)

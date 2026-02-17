@@ -1,15 +1,15 @@
-import { Avatar, Dropdown, Input, Space } from 'antd'
+import { Avatar, Button, Dropdown, Input, Space } from 'antd'
 import { useRouterState } from '@tanstack/react-router'
-import { useAuth } from '../../../store/auth'
-import { router } from '../../../app/router'
 import type { SearchProps } from 'antd/es/input'
 import styles from './desktopMenu.module.scss'
-import { Logo } from '../../../assets/logo'
 import { UserOutlined } from '@ant-design/icons'
 import {
   loggedUserDropdownItems,
   notloggedUserDropdownItems,
 } from '../dropdownItems'
+import { useAuth } from '@/store/auth'
+import { router } from '@/app/router'
+import { Logo } from '@/assets/logo'
 
 export const DesktopMenu = () => {
   const pathname = useRouterState().location.pathname
@@ -18,10 +18,6 @@ export const DesktopMenu = () => {
 
   const showSearch = pathname !== '/login' && pathname !== '/register'
 
-  const navigateToHomepage = () => {
-    router.navigate({ to: '/' })
-  }
-
   const onSearch: SearchProps['onSearch'] = (value, _e, info) =>
     console.log(info?.source, value)
 
@@ -29,7 +25,10 @@ export const DesktopMenu = () => {
     <header className={styles.menu}>
       <div className={styles.menuContent}>
         <div className={styles.leftContent}>
-          <button onClick={navigateToHomepage} className={styles.logoButton}>
+          <button
+            onClick={() => router.navigate({ to: '/' })}
+            className={styles.logoButton}
+          >
             <Logo />
           </button>
 
@@ -44,26 +43,35 @@ export const DesktopMenu = () => {
           )}
         </div>
 
-        <Dropdown
-          menu={{
-            items: isLoggedIn
-              ? loggedUserDropdownItems
-              : notloggedUserDropdownItems,
-          }}
-        >
-          <a onClick={(e) => e.preventDefault()}>
-            <Space>
-              {isLoggedIn && (
-                <span className={styles.usernameText}>{user?.username}</span>
-              )}
-              <Avatar
-                size={36}
-                icon={<UserOutlined />}
-                className={styles.userIcon}
-              />
-            </Space>
-          </a>
-        </Dropdown>
+        {isLoggedIn ? (
+          <Dropdown
+            menu={{
+              items: isLoggedIn
+                ? loggedUserDropdownItems
+                : notloggedUserDropdownItems,
+            }}
+          >
+            <a onClick={(e) => e.preventDefault()}>
+              <Space>
+                {isLoggedIn && (
+                  <span className={styles.usernameText}>{user?.username}</span>
+                )}
+                <Avatar
+                  size={36}
+                  icon={<UserOutlined />}
+                  className={styles.userIcon}
+                />
+              </Space>
+            </a>
+          </Dropdown>
+        ) : (
+          <Button
+            type="primary"
+            onClick={() => router.navigate({ to: '/login' })}
+          >
+            Zaloguj się
+          </Button>
+        )}
       </div>
     </header>
   )

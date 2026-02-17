@@ -1,0 +1,46 @@
+@use '@/styles/variables.scss' as *;
+
+.postContainer {
+  flex-direction: column;
+  gap: 2rem;
+  background: $white;
+  padding: 2.4rem;
+  border-radius: 0.8rem;
+  box-shadow: $container-box-shadow;
+  transition: 0.4s;
+  width: 100%;
+
+  &:hover {
+    transform: translateY(-0.2rem);
+    box-shadow: $container-box-shadow-hover;
+  }
+
+  @media (min-width: 768px) {
+    width: 60%;
+  }
+}
+
+.username {
+  font-weight: 600;
+}
+
+.locationIcon {
+  color: $primary;
+}
+
+.postTitle {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.postText {
+  font-size: 1.4rem;
+}
+
+.greyText {
+  color: $gray;
+}
+
+.commentIcon {
+  font-size: 1.8rem;
+}
