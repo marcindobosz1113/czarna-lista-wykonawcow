@@ -1,8 +1,8 @@
 @use '@/styles/variables.scss' as *;
 
 .homepageContainer {
-  padding: 2rem;
-  gap: 2rem;
+  padding-top: 2rem;
+  max-width: 100%;
 }
 
 .postsContainer {

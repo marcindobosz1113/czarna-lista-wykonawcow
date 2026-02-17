@@ -1,59 +1,84 @@
-import { useState } from 'react'
-import { Button, Col, Modal, Row } from 'antd'
+import { useCallback, useRef } from 'react'
+import { Col, Row } from 'antd'
 
 import styles from './homepage.module.scss'
-import { NewPostForm } from './newPostForm/NewPostForm'
-import { useGetPosts } from '@/hooks/posts/useGetPosts'
 import { PostCard } from '@/layout/homepage/postCard/PostCard'
+import { NewPostButtonWithModal } from '@/layout/homepage/newPostButtonWithModal/NewPostButtonWithModal'
+import { usePostsInfinite } from '@/hooks/posts/usePostsInfinite'
+import { PostCardSkeleton } from '@/components/PostCardSkeleton'
 
 export const Homepage = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const {
+    data: posts,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = usePostsInfinite()
 
-  const { data: posts } = useGetPosts()
+  const observer = useRef<IntersectionObserver | null>(null)
+
+  const lastPostRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (isFetchingNextPage) {
+        return
+      }
+
+      if (observer.current) observer.current.disconnect()
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage()
+        }
+      })
+
+      if (node) observer.current.observe(node)
+    },
+    [isFetchingNextPage, hasNextPage, fetchNextPage]
+  )
 
   return (
-    <Row className={styles.homepageContainer}>
-      <Col span={24}>
-        <Row justify="start">
-          <Button
-            type="primary"
-            onClick={() => setIsModalOpen(true)}
-            size="large"
-          >
-            Dodaj post
-          </Button>
+    <Row className={styles.homepageContainer} gutter={20}>
+      <Col span={16}>
+        <NewPostButtonWithModal />
 
-          <Modal
-            title="Zgłoś wykonawcę"
-            centered
-            open={isModalOpen}
-            confirmLoading={false}
-            onCancel={() => setIsModalOpen(false)}
-            okText="Dodaj"
-            cancelText="Anuluj"
-            style={{ top: -70 }}
-            footer={() => <></>}
-            width={{
-              xs: '90%',
-              sm: '80%',
-              md: '70%',
-              lg: '60%',
-              xl: '50%',
-              xxl: '40%',
-            }}
-          >
-            <NewPostForm setIsModalOpen={setIsModalOpen} />
-          </Modal>
-        </Row>
-      </Col>
-
-      <Col span={24}>
         <Row className={styles.postsContainer} justify="center">
-          {posts?.map((post) => (
-            <PostCard post={post} />
-          ))}
+          {!posts ? (
+            <Col>
+              <PostCardSkeleton />
+              <PostCardSkeleton />
+            </Col>
+          ) : (
+            <>
+              {posts?.pages?.map((page, pageIndex) =>
+                page.map((post, postIndex) => {
+                  const isLast =
+                    pageIndex === posts.pages.length - 1 &&
+                    postIndex === page.length - 1
+
+                  if (isLast) {
+                    return (
+                      <div ref={lastPostRef} key={post._id}>
+                        <PostCard post={post} />
+                      </div>
+                    )
+                  }
+
+                  return <PostCard key={post._id} post={post} />
+                })
+              )}
+
+              {isFetchingNextPage && (
+                <>
+                  <PostCardSkeleton />
+                  <PostCardSkeleton />
+                </>
+              )}
+            </>
+          )}
         </Row>
       </Col>
+
+      <Col span={8}>Right side container</Col>
     </Row>
   )
 }

@@ -14,10 +14,6 @@
     transform: translateY(-0.2rem);
     box-shadow: $container-box-shadow-hover;
   }
-
-  @media (min-width: 768px) {
-    width: 60%;
-  }
 }
 
 .username {
