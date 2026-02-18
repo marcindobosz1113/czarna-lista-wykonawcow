@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { breakpoints } from '../../constants/breakpoints'
+import { breakpoints } from '@/constants/breakpoints'
 
 type BreakpointKey = keyof typeof breakpoints
 

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import {
   Image,
+  message,
   Upload,
   type GetProp,
   type UploadFile,
@@ -14,6 +15,8 @@ interface ImagesUploaderProps {
   fileList: UploadFile[]
   setFileList: (files: UploadFile[]) => void
 }
+
+const MAX_FILES = 6
 
 const getBase64 = (file: FileType): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -39,8 +42,13 @@ export const ImagesUploader = ({
     setPreviewOpen(true)
   }
 
-  const handleChange: UploadProps['onChange'] = ({ fileList }) => {
-    setFileList(fileList)
+  const handleChange: UploadProps['onChange'] = ({ fileList: newList }) => {
+    if (newList.length > MAX_FILES) {
+      message.error(`Możesz dodać maksymalnie ${MAX_FILES} zdjęcia`)
+      return
+    }
+
+    setFileList(newList)
   }
 
   const uploadButton = (
@@ -61,7 +69,7 @@ export const ImagesUploader = ({
         onChange={handleChange}
         accept="image/*"
       >
-        {fileList.length >= 8 ? null : uploadButton}
+        {fileList.length >= 6 ? null : uploadButton}
       </Upload>
 
       {previewImage && (

@@ -14,8 +14,8 @@ import {
 import styles from './newPostForm.module.scss'
 import { useCreatePost } from '@/hooks/posts/useCreatePost'
 import { ImagesUploader } from '@/components/ImagesUploader'
-import { useGetPosts } from '@/hooks/posts/useGetPosts'
 import FormItem from 'antd/es/form/FormItem'
+import { usePostsInfinite } from '@/hooks/posts/usePostsInfinite'
 
 type FieldType = {
   title: string
@@ -33,7 +33,7 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
 
   const [form] = Form.useForm()
   const cretePost = useCreatePost()
-  const { refetch: refetchPosts } = useGetPosts()
+  const { refetch: refetchPosts } = usePostsInfinite()
 
   const onSubmit = () => {
     cretePost.mutate(

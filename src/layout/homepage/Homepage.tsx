@@ -1,7 +1,7 @@
 import { useCallback, useRef } from 'react'
 import { Col, Row } from 'antd'
 
-import styles from './homepage.module.scss'
+import styles from './Homepage.module.scss'
 import { PostCard } from '@/layout/homepage/postCard/PostCard'
 import { NewPostButtonWithModal } from '@/layout/homepage/newPostButtonWithModal/NewPostButtonWithModal'
 import { usePostsInfinite } from '@/hooks/posts/usePostsInfinite'
@@ -23,7 +23,9 @@ export const Homepage = () => {
         return
       }
 
-      if (observer.current) observer.current.disconnect()
+      if (observer.current) {
+        observer.current.disconnect()
+      }
 
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasNextPage) {
