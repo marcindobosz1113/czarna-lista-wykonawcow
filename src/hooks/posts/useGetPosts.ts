@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../../api/client'
+import type { POST_TYPES } from '@/layout/homepage/types'
 
 export interface Post {
   images: string[]
+  postType: POST_TYPES
   text: string
   title: string
   username: string | null

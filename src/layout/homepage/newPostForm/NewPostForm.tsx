@@ -7,6 +7,7 @@ import {
   message,
   Rate,
   Row,
+  Select,
   Space,
   type UploadFile,
 } from 'antd'
@@ -16,8 +17,10 @@ import { useCreatePost } from '@/hooks/posts/useCreatePost'
 import { ImagesUploader } from '@/components/ImagesUploader'
 import FormItem from 'antd/es/form/FormItem'
 import { usePostsInfinite } from '@/hooks/posts/usePostsInfinite'
+import { POST_TYPES } from '@/layout/homepage/types'
 
 type FieldType = {
+  postType: string
   title: string
   text: string
   location: string
@@ -30,14 +33,18 @@ interface NewPostFormProps {
 export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
   const [images, setImages] = useState<UploadFile[]>([])
   const [rate, setRate] = useState(1)
+  const [postType, setPostType] = useState('')
 
   const [form] = Form.useForm()
   const cretePost = useCreatePost()
   const { refetch: refetchPosts } = usePostsInfinite()
 
+  const isPostReportType = postType === POST_TYPES.REPORT
+
   const onSubmit = () => {
     cretePost.mutate(
       {
+        postType: form.getFieldValue('postType'),
         title: form.getFieldValue('title'),
         text: form.getFieldValue('text'),
         location: form.getFieldValue('location'),
@@ -60,25 +67,41 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
   }
 
   return (
-    <Form form={form} name="newPost" onFinish={onSubmit}>
+    <Form form={form} name="newPost" layout="vertical" onFinish={onSubmit}>
       <Row gutter={24}>
+        <Col span={24}>
+          <Form.Item<FieldType>
+            label="Typ zgłoszenia"
+            name="postType"
+            rules={[{ required: true, message: 'Wybierz typ zgłozenia' }]}
+          >
+            <Select
+              onChange={setPostType}
+              allowClear
+              options={[
+                { value: POST_TYPES.REPORT, label: 'Zgłoś wykonawcę' },
+                { value: POST_TYPES.QUESTION, label: 'Zadaj pytanie' },
+              ]}
+              placeholder="Wybierz typ zgłoszenia"
+            />
+          </Form.Item>
+        </Col>
+
         <Col span={12}>
           <Form.Item<FieldType>
-            layout="vertical"
-            label="Imię i nazwisko / Firma"
+            label="Tytuł"
             name="title"
             rules={[
               { required: true, message: 'Podaj tytuł' },
               { min: 6, message: 'Napisz dłuższy tytuł, min. 6 znaków' },
             ]}
           >
-            <Input placeholder="Wpisz imię i nazwisko / firmę" />
+            <Input placeholder="Wpisz tytuł" />
           </Form.Item>
         </Col>
 
         <Col span={12}>
           <Form.Item<FieldType>
-            layout="vertical"
             label="Lokalizacja"
             name="location"
             rules={[
@@ -92,8 +115,7 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
       </Row>
 
       <Form.Item<FieldType>
-        layout="vertical"
-        label="Szczegóły zdarzenia"
+        label="Szczegóły"
         name="text"
         rules={[
           { required: true, message: 'Napisz coś...' },
@@ -103,12 +125,19 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
         <Input.TextArea rows={6} placeholder="Napisz coś..." />
       </Form.Item>
 
-      <FormItem<FieldType>>
-        <Space>
-          <span>Ocena wykonawcy:</span>
-          <Rate size="small" onChange={setRate} defaultValue={1} value={rate} />
-        </Space>
-      </FormItem>
+      {isPostReportType && (
+        <FormItem<FieldType>>
+          <Space>
+            <span>Ocena wykonawcy:</span>
+            <Rate
+              size="small"
+              onChange={setRate}
+              defaultValue={1}
+              value={rate}
+            />
+          </Space>
+        </FormItem>
+      )}
 
       <Form.Item>
         <ImagesUploader fileList={images} setFileList={setImages} />

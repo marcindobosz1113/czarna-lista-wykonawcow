@@ -5,28 +5,48 @@ import dayjs from 'dayjs'
 import { type Post } from '@/hooks/posts/useGetPosts.ts'
 import styles from './postCard.module.scss'
 import { CommentOutlined, EnvironmentOutlined } from '@ant-design/icons'
+import { PostTypeBadge } from '@/components/PostTypeBadge'
+import { POST_TYPES } from '@/layout/homepage/types'
 
-const MAX_LENGTH = 200
+const TEXT_MAX_LENGTH = 200
 
 interface PostCardProps {
   post: Post
 }
 
 export const PostCard = ({ post }: PostCardProps) => {
-  const { _id, text, title, username, createdAt, rate, images, location } = post
+  const {
+    _id,
+    postType,
+    text,
+    title,
+    username,
+    createdAt,
+    rate,
+    images,
+    location,
+  } = post
 
   const [expanded, setExpanded] = useState(false)
 
-  const isLong = text.length > MAX_LENGTH
-  const displayText = expanded ? text : text.slice(0, MAX_LENGTH)
+  const isLong = text.length > TEXT_MAX_LENGTH
+  const displayText = expanded ? text : text.slice(0, TEXT_MAX_LENGTH)
+
+  const isReportTypePost = postType === POST_TYPES.REPORT
 
   return (
     <Row key={_id} justify="start" className={styles.postContainer}>
       <Row>
-        <Col span={24}>
+        <Col span={12}>
           <span className={styles.username}>
             {username || 'Anonimowy użytkownik'}
           </span>
+        </Col>
+
+        <Col span={12}>
+          <Row justify="end">
+            <PostTypeBadge type={postType} />
+          </Row>
         </Col>
 
         <Col span={24}>
@@ -41,12 +61,14 @@ export const PostCard = ({ post }: PostCardProps) => {
         </Col>
       </Row>
 
-      <Row>
-        <Space>
-          <Rate value={rate} disabled size="small" />
-          <span className={styles.greyText}>Ocena {rate || 1}/5</span>
-        </Space>
-      </Row>
+      {isReportTypePost && (
+        <Row>
+          <Space>
+            <Rate value={rate} disabled size="small" />
+            <span className={styles.greyText}>Ocena {rate || 1}/5</span>
+          </Space>
+        </Row>
+      )}
 
       <Row>
         <span className={styles.postTitle}>{title}</span>
