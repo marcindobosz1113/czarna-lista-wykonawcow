@@ -1,10 +1,14 @@
 @use '@/styles/variables.scss' as *;
 
-.filtersContainer {
+.container {
   background: $white;
   padding: 2.4rem;
   border-radius: 0.8rem;
   box-shadow: $container-box-shadow;
+}
+
+.spacer {
+  width: 100%;
 }
 
 .title {
@@ -26,13 +30,18 @@
   }
 }
 
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: red;
+.place {
+  color: $gray;
+  font-size: 3rem;
+  font-weight: 600;
+  font-family: 'DM Serif Display', serif;
 }
 
-.active {
-  transform: translateX(5px);
+.reportsCount {
+  font-size: 1.2rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #fff5f5;
+  color: #e13d3d;
+  font-weight: 600;
+  border-radius: 50px;
 }

@@ -48,15 +48,14 @@ export const Filter = () => {
         </Col>
 
         {Object.values(POST_CATEGORIES).map((category) => (
-          <Row align="middle">
-            <Button
-              className={`${styles.category} ${isCategoryActive(category) ? styles.active : ''}`}
-              onClick={() => handleClick(category)}
-            >
-              <div className={styles.dot} style={dotStyles[category]} />
-              {categoriesLabels[category]}
-            </Button>
-          </Row>
+          <Button
+            key={category}
+            className={`${styles.category} ${isCategoryActive(category) ? styles.active : ''}`}
+            onClick={() => handleClick(category)}
+          >
+            <div className={styles.dot} style={dotStyles[category]} />
+            {categoriesLabels[category]}
+          </Button>
         ))}
       </Space>
     </Row>

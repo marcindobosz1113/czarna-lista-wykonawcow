@@ -10,6 +10,7 @@ import { useSearch } from '@/store/search'
 import { PostCategoryBadge } from '@/components/PostCategoryBadge'
 import { PostTypeBadge } from '@/components/PostTypeBadge'
 import { Filter } from '@/layout/homepage/filters/Filters'
+import { MostReported } from '@/layout/homepage/mostReported/MostReported'
 
 export const Homepage = () => {
   const { sort, setSort } = usePostsSort()
@@ -60,7 +61,10 @@ export const Homepage = () => {
 
       {isDesktop && (
         <Col span={8}>
-          <Filter />
+          <Space orientation="vertical" size="middle" style={{ width: '100%' }}>
+            <Filter />
+            <MostReported />
+          </Space>
         </Col>
       )}
     </Row>

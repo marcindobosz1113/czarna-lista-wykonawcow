@@ -2,13 +2,13 @@ import { useState } from 'react'
 import { Button, Col, Divider, Image, Rate, Row, Space } from 'antd'
 import dayjs from 'dayjs'
 
-import { type Post } from '@/hooks/posts/useGetPosts.ts'
 import styles from './postCard.module.scss'
 import { CommentOutlined, EnvironmentOutlined } from '@ant-design/icons'
 import { PostTypeBadge } from '@/components/PostTypeBadge'
 import { POST_TYPES } from '@/layout/homepage/types'
 import { PostCategoryBadge } from '@/components/PostCategoryBadge'
 import { useBreakpoint } from '@/hooks/breakpoints/useBreakpoints'
+import type { Post } from '@/hooks/posts/usePostsInfinite'
 
 const TEXT_MAX_LENGTH = 200
 

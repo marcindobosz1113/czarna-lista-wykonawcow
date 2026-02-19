@@ -1,7 +1,22 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
-import type { Post } from '@/hooks/posts/useGetPosts'
 import { api } from '@/api/client'
 import type { POST_CATEGORIES, POST_TYPES } from '@/layout/homepage/types'
+import { normalize } from '@/utils/normalize'
+
+export interface Post {
+  images: string[]
+  postType: POST_TYPES
+  text: string
+  contractorName: string
+  username: string | null
+  userId: number | null
+  location: string
+  createdAt: string
+  updatedAt: string
+  category: POST_CATEGORIES
+  rate: number
+  _id: string
+}
 
 export const usePostsInfinite = (
   sort?: string,
@@ -12,9 +27,10 @@ export const usePostsInfinite = (
   useInfiniteQuery({
     queryKey: ['posts', sort, search, category, type],
     queryFn: async ({ pageParam = 1 }) => {
-      const response = await api.get<Post[]>(
-        `/api/posts?page=${pageParam}&sort=${sort || ''}&search=${search || ''}&category=${category || ''}&postType=${type || ''}`
+      const params = normalize(
+        `?page=${pageParam}&sort=${sort || ''}&search=${search || ''}&category=${category || ''}&postType=${type || ''}`
       )
+      const response = await api.get<Post[]>(`/api/posts${params}`)
 
       return response
     },
