@@ -7,12 +7,7 @@ export const NewPostButtonWithModal = () => {
 
   return (
     <>
-      <Button
-        type="primary"
-        onClick={() => setIsModalOpen(true)}
-        size="large"
-        style={{ marginBottom: 20 }}
-      >
+      <Button type="primary" onClick={() => setIsModalOpen(true)} size="large">
         Dodaj post
       </Button>
 

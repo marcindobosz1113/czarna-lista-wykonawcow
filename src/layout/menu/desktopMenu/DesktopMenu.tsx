@@ -3,10 +3,7 @@ import { useRouterState } from '@tanstack/react-router'
 import type { SearchProps } from 'antd/es/input'
 import styles from './desktopMenu.module.scss'
 import { UserOutlined } from '@ant-design/icons'
-import {
-  loggedUserDropdownItems,
-  notloggedUserDropdownItems,
-} from '../dropdownItems'
+import { loggedUserDropdownItems } from '../dropdownItems'
 import { useAuth } from '@/store/auth'
 import { router } from '@/app/router'
 import { Logo } from '@/assets/logo'
@@ -46,16 +43,12 @@ export const DesktopMenu = () => {
         {isLoggedIn ? (
           <Dropdown
             menu={{
-              items: isLoggedIn
-                ? loggedUserDropdownItems
-                : notloggedUserDropdownItems,
+              items: loggedUserDropdownItems,
             }}
           >
             <a onClick={(e) => e.preventDefault()}>
               <Space>
-                {isLoggedIn && (
-                  <span className={styles.usernameText}>{user?.username}</span>
-                )}
+                {<span className={styles.usernameText}>{user?.username}</span>}
                 <Avatar
                   size={36}
                   icon={<UserOutlined />}

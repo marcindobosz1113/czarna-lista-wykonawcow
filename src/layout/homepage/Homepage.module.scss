@@ -5,8 +5,18 @@
   max-width: 100%;
 }
 
+.postUtilsContainer {
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
 .postsContainer {
   gap: 2rem;
   flex-direction: column;
   width: 100%;
+}
+
+.sortSelect {
+  min-width: 20rem;
 }

@@ -37,13 +37,13 @@ export const PostCard = ({ post }: PostCardProps) => {
   return (
     <Row key={_id} justify="start" className={styles.postContainer}>
       <Row>
-        <Col span={12}>
+        <Col span={16}>
           <span className={styles.username}>
             {username || 'Anonimowy użytkownik'}
           </span>
         </Col>
 
-        <Col span={12}>
+        <Col span={8}>
           <Row justify="end">
             <PostTypeBadge type={postType} />
           </Row>

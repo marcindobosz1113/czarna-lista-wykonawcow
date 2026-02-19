@@ -15,4 +15,5 @@ export const useMe = () =>
       return response
     },
     retry: false,
+    refetchOnWindowFocus: true,
   })

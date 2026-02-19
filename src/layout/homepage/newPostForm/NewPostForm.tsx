@@ -17,7 +17,8 @@ import { useCreatePost } from '@/hooks/posts/useCreatePost'
 import { ImagesUploader } from '@/components/ImagesUploader'
 import FormItem from 'antd/es/form/FormItem'
 import { usePostsInfinite } from '@/hooks/posts/usePostsInfinite'
-import { POST_TYPES } from '@/layout/homepage/types'
+import { POST_TYPES, SORT_TYPES } from '@/layout/homepage/types'
+import { usePostsSort } from '@/store/postsSort'
 
 type FieldType = {
   postType: string
@@ -34,12 +35,13 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
   const [images, setImages] = useState<UploadFile[]>([])
   const [rate, setRate] = useState(1)
   const [postType, setPostType] = useState('')
+  const { setSort } = usePostsSort()
 
   const [form] = Form.useForm()
   const cretePost = useCreatePost()
-  const { refetch: refetchPosts } = usePostsInfinite()
+  const { refetch: refetchPosts } = usePostsInfinite(SORT_TYPES.NEWEST)
 
-  const isPostReportType = postType === POST_TYPES.REPORT
+  const isQuestionTypePost = postType === POST_TYPES.QUESTION
 
   const onSubmit = () => {
     cretePost.mutate(
@@ -56,6 +58,7 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
       {
         onSuccess: () => {
           refetchPosts()
+          setSort(SORT_TYPES.NEWEST)
           setIsModalOpen(false)
           message.success('Post został dodany!')
           form.resetFields()
@@ -80,6 +83,7 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
               allowClear
               options={[
                 { value: POST_TYPES.REPORT, label: 'Zgłoś wykonawcę' },
+                { value: POST_TYPES.APPROVAL, label: 'Pochwal wykonawcę' },
                 { value: POST_TYPES.QUESTION, label: 'Zadaj pytanie' },
               ]}
               placeholder="Wybierz typ zgłoszenia"
@@ -125,7 +129,7 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
         <Input.TextArea rows={6} placeholder="Napisz coś..." />
       </Form.Item>
 
-      {isPostReportType && (
+      {!isQuestionTypePost && (
         <FormItem<FieldType>>
           <Space>
             <span>Ocena wykonawcy:</span>

@@ -12,27 +12,33 @@ const badgeStyles = {
   fontSize: '1.2rem',
 }
 
-const reportBadgeStyles = {
-  background: '#FFF5F5',
-  color: '#E13D3D',
+const styles = {
+  [POST_TYPES.REPORT]: {
+    background: '#FFF5F5',
+    color: '#E13D3D',
+  },
+  [POST_TYPES.APPROVAL]: {
+    background: '#eafaeb',
+    color: '#20df49',
+  },
+  [POST_TYPES.QUESTION]: { background: '#faf9e9', color: '#dfbf31' },
 }
 
-const questionBadgeStyles = {
-  background: '#faf9e9',
-  color: '#e1c33d',
+const labels = {
+  [POST_TYPES.REPORT]: 'Zgłoszenie',
+  [POST_TYPES.APPROVAL]: 'Pochwała',
+  [POST_TYPES.QUESTION]: 'Pytanie',
 }
 
 export const PostTypeBadge = ({ type }: PostTypeBadgeProps) => {
-  const isReportType = type === POST_TYPES.REPORT
-
   return (
     <div
       style={{
         ...badgeStyles,
-        ...(isReportType ? reportBadgeStyles : questionBadgeStyles),
+        ...styles[type],
       }}
     >
-      {isReportType ? 'Zgłoszenie' : 'Pytanie'}
+      {labels[type]}
     </div>
   )
 }

@@ -11,6 +11,7 @@ export const Route = createRootRoute({
         <div className={styles.container}>
           <Outlet />
         </div>
+        <div>© 2026 Czarna lista wykonawców. Wszystkie prawa zastrzeżone.</div>
       </>
     )
   },

@@ -1,86 +1,60 @@
-import { useCallback, useRef } from 'react'
-import { Col, Row } from 'antd'
+import { Col, Row, Select } from 'antd'
 
 import styles from './Homepage.module.scss'
-import { PostCard } from '@/layout/homepage/postCard/PostCard'
 import { NewPostButtonWithModal } from '@/layout/homepage/newPostButtonWithModal/NewPostButtonWithModal'
+import { PostsList } from '@/layout/homepage/postsList/PostsList'
 import { usePostsInfinite } from '@/hooks/posts/usePostsInfinite'
-import { PostCardSkeleton } from '@/components/PostCardSkeleton'
+import { SORT_TYPES } from '@/layout/homepage/types'
+import { usePostsSort } from '@/store/postsSort'
+import { useBreakpoint } from '@/hooks/breakpoints/useBreakpoints'
 
 export const Homepage = () => {
+  const { sort, setSort } = usePostsSort()
+
+  const { isDesktop } = useBreakpoint()
+
   const {
     data: posts,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = usePostsInfinite()
-
-  const observer = useRef<IntersectionObserver | null>(null)
-
-  const lastPostRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      if (isFetchingNextPage) {
-        return
-      }
-
-      if (observer.current) {
-        observer.current.disconnect()
-      }
-
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasNextPage) {
-          fetchNextPage()
-        }
-      })
-
-      if (node) observer.current.observe(node)
-    },
-    [isFetchingNextPage, hasNextPage, fetchNextPage]
-  )
+  } = usePostsInfinite(sort)
 
   return (
     <Row className={styles.homepageContainer} gutter={20}>
-      <Col span={16}>
-        <NewPostButtonWithModal />
+      <Col span={isDesktop ? 16 : 24} className={styles.postUtilsContainer}>
+        <Row justify="space-between" align="middle">
+          <NewPostButtonWithModal />
+
+          <Select
+            className={styles.sortSelect}
+            onChange={setSort}
+            options={[
+              { value: SORT_TYPES.NEWEST, label: 'Najnowsze' },
+              { value: SORT_TYPES.OLDEST, label: 'Najstarsze' },
+              // {
+              //   value: SORT_TYPES.MOST_COMENTED,
+              //   label: 'Najwięcej komentarzy',
+              // },
+              { value: SORT_TYPES.MOST_RATED, label: 'Najlepiej oceniane' },
+              { value: SORT_TYPES.LESS_RATED, label: 'Najgorzej oceniane' },
+            ]}
+            placeholder="Sor"
+            value={sort}
+          />
+        </Row>
 
         <Row className={styles.postsContainer} justify="center">
-          {!posts ? (
-            <Col>
-              <PostCardSkeleton />
-              <PostCardSkeleton />
-            </Col>
-          ) : (
-            <>
-              {posts?.pages?.map((page, pageIndex) =>
-                page.map((post, postIndex) => {
-                  const isLast =
-                    pageIndex === posts.pages.length - 1 &&
-                    postIndex === page.length - 1
-
-                  if (isLast) {
-                    return (
-                      <div ref={lastPostRef} key={post._id}>
-                        <PostCard post={post} />
-                      </div>
-                    )
-                  }
-
-                  return <PostCard key={post._id} post={post} />
-                })
-              )}
-
-              {isFetchingNextPage && (
-                <>
-                  <PostCardSkeleton />
-                  <PostCardSkeleton />
-                </>
-              )}
-            </>
-          )}
+          <PostsList
+            posts={posts}
+            fetchNextPage={fetchNextPage}
+            hasNextPage={hasNextPage}
+            isFetchingNextPage={isFetchingNextPage}
+          />
         </Row>
       </Col>
 
-      <Col span={8}>Right side container</Col>
+      {isDesktop && <Col span={8}>Right side container</Col>}
     </Row>
   )
 }
