@@ -2,7 +2,7 @@ import { POST_TYPES } from '@/layout/homepage/types'
 import { useSearch } from '@/store/search'
 
 interface PostTypeBadgeProps {
-  type: POST_TYPES
+  postType: POST_TYPES
 }
 
 const badgeStyles = {
@@ -32,19 +32,28 @@ const labels = {
   [POST_TYPES.QUESTION]: 'Pytanie',
 }
 
-export const PostTypeBadge = ({ type }: PostTypeBadgeProps) => {
-  const { setType } = useSearch()
+export const PostTypeBadge = ({ postType }: PostTypeBadgeProps) => {
+  const { postType: currentPostType, setPostType } = useSearch()
+
+  const handleClick = () => {
+    if (postType === currentPostType) {
+      setPostType(undefined)
+      return
+    }
+
+    setPostType(postType)
+  }
 
   return (
     <div
       style={{
         ...badgeStyles,
-        ...styles[type],
+        ...styles[postType],
       }}
       role="button"
-      onClick={() => setType(type)}
+      onClick={handleClick}
     >
-      {labels[type]}
+      {labels[postType]}
     </div>
   )
 }

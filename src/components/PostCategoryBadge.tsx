@@ -42,7 +42,7 @@ const styles = {
 
 const labels = {
   [POST_CATEGORIES.INTERIOR_FINISHING]: 'Wykończenia',
-  [POST_CATEGORIES.INSTALLATIONS]: 'Instalację',
+  [POST_CATEGORIES.INSTALLATIONS]: 'Instalacje',
   [POST_CATEGORIES.STRUCTURES]: 'Konstrukcje',
   [POST_CATEGORIES.FACADES]: 'Elewacje',
   [POST_CATEGORIES.ROOFS]: 'Dachy',
@@ -50,7 +50,16 @@ const labels = {
 }
 
 export const PostCategoryBadge = ({ category }: PostCategoryBadgeProps) => {
-  const { setCategory } = useSearch()
+  const { category: currentCategory, setCategory } = useSearch()
+
+  const handleClick = () => {
+    if (category === currentCategory) {
+      setCategory(undefined)
+      return
+    }
+
+    setCategory(category)
+  }
 
   return (
     <div
@@ -59,7 +68,7 @@ export const PostCategoryBadge = ({ category }: PostCategoryBadgeProps) => {
         ...styles[category],
       }}
       role="button"
-      onClick={() => setCategory(category)}
+      onClick={handleClick}
     >
       {labels[category]}
     </div>

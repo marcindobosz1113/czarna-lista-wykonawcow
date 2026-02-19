@@ -63,7 +63,7 @@ export const PostCard = ({ post }: PostCardProps) => {
           <Space orientation={isMobile ? 'vertical' : 'horizontal'}>
             <PostCategoryBadge category={category} />
 
-            <PostTypeBadge type={postType} />
+            <PostTypeBadge postType={postType} />
           </Space>
         </Col>
       </Row>

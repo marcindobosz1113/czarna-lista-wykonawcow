@@ -7,10 +7,12 @@ import { SORT_TYPES } from '@/layout/homepage/types'
 import { usePostsSort } from '@/store/postsSort'
 import { useBreakpoint } from '@/hooks/breakpoints/useBreakpoints'
 import { useSearch } from '@/store/search'
+import { PostCategoryBadge } from '@/components/PostCategoryBadge'
+import { PostTypeBadge } from '@/components/PostTypeBadge'
 
 export const Homepage = () => {
   const { sort, setSort } = usePostsSort()
-  const { clear: clearSearch } = useSearch()
+  const { postType, category, clearSearch } = useSearch()
 
   const { isDesktop } = useBreakpoint()
 
@@ -39,9 +41,15 @@ export const Homepage = () => {
         </Row>
 
         <Row justify="end">
-          <Button type="primary" onClick={clearSearch}>
-            Wyczyść filtry
-          </Button>
+          <Space size="middle">
+            {category && <PostCategoryBadge category={category} />}
+
+            {postType && <PostTypeBadge postType={postType} />}
+
+            <Button type="primary" onClick={clearSearch}>
+              Wyczyść filtry
+            </Button>
+          </Space>
         </Row>
 
         <Row className={styles.postsContainer} justify="center">

@@ -117,7 +117,7 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
                 },
                 {
                   value: POST_CATEGORIES.INSTALLATIONS,
-                  label: 'Instalację',
+                  label: 'Instalacje',
                 },
                 { value: POST_CATEGORIES.STRUCTURES, label: 'Konstrukcje' },
                 { value: POST_CATEGORIES.FACADES, label: 'Elewacje' },
