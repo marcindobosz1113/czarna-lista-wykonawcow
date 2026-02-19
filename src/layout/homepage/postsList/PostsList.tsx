@@ -3,22 +3,24 @@ import { Col } from 'antd'
 import { PostCardSkeleton } from '@/components/PostCardSkeleton'
 
 import { PostCard } from '@/layout/homepage/postCard/PostCard'
-import type { InfiniteData } from '@tanstack/react-query'
-import type { Post } from '@/hooks/posts/useGetPosts'
+import { usePostsInfinite } from '@/hooks/posts/usePostsInfinite'
+import { usePostsSort } from '@/store/postsSort'
+import { useSearch } from '@/store/search'
+import { useDebounce } from '@/hooks/utils/useDebounce'
 
-interface PostsListProps {
-  posts: InfiniteData<Post[], unknown> | undefined
-  fetchNextPage: () => void
-  hasNextPage: boolean
-  isFetchingNextPage: boolean
-}
+export const PostsList = () => {
+  const { sort } = usePostsSort()
+  const { search } = useSearch()
 
-export const PostsList = ({
-  posts,
-  fetchNextPage,
-  hasNextPage,
-  isFetchingNextPage,
-}: PostsListProps) => {
+  const debounceSearch = useDebounce(search)
+
+  const {
+    data: posts,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = usePostsInfinite(sort, debounceSearch)
+
   const observer = useRef<IntersectionObserver | null>(null)
 
   const lastPostRef = useCallback(

@@ -19,6 +19,7 @@ import FormItem from 'antd/es/form/FormItem'
 import { usePostsInfinite } from '@/hooks/posts/usePostsInfinite'
 import { POST_TYPES, SORT_TYPES } from '@/layout/homepage/types'
 import { usePostsSort } from '@/store/postsSort'
+import { useSearch } from '@/store/search'
 
 type FieldType = {
   postType: string
@@ -36,10 +37,11 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
   const [rate, setRate] = useState(1)
   const [postType, setPostType] = useState('')
   const { setSort } = usePostsSort()
+  const { setSearch } = useSearch()
 
   const [form] = Form.useForm()
   const cretePost = useCreatePost()
-  const { refetch: refetchPosts } = usePostsInfinite(SORT_TYPES.NEWEST)
+  const { refetch: refetchPosts } = usePostsInfinite(SORT_TYPES.NEWEST, '')
 
   const isQuestionTypePost = postType === POST_TYPES.QUESTION
 
@@ -59,11 +61,12 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
         onSuccess: () => {
           refetchPosts()
           setSort(SORT_TYPES.NEWEST)
+          setSearch('')
           setIsModalOpen(false)
-          message.success('Post został dodany!')
           form.resetFields()
           setImages([])
           setRate(1)
+          message.success('Post został dodany!')
         },
       }
     )

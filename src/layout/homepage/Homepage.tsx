@@ -3,7 +3,6 @@ import { Col, Row, Select } from 'antd'
 import styles from './Homepage.module.scss'
 import { NewPostButtonWithModal } from '@/layout/homepage/newPostButtonWithModal/NewPostButtonWithModal'
 import { PostsList } from '@/layout/homepage/postsList/PostsList'
-import { usePostsInfinite } from '@/hooks/posts/usePostsInfinite'
 import { SORT_TYPES } from '@/layout/homepage/types'
 import { usePostsSort } from '@/store/postsSort'
 import { useBreakpoint } from '@/hooks/breakpoints/useBreakpoints'
@@ -12,13 +11,6 @@ export const Homepage = () => {
   const { sort, setSort } = usePostsSort()
 
   const { isDesktop } = useBreakpoint()
-
-  const {
-    data: posts,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = usePostsInfinite(sort)
 
   return (
     <Row className={styles.homepageContainer} gutter={20}>
@@ -45,12 +37,7 @@ export const Homepage = () => {
         </Row>
 
         <Row className={styles.postsContainer} justify="center">
-          <PostsList
-            posts={posts}
-            fetchNextPage={fetchNextPage}
-            hasNextPage={hasNextPage}
-            isFetchingNextPage={isFetchingNextPage}
-          />
+          <PostsList />
         </Row>
       </Col>
 

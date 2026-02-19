@@ -1,12 +1,12 @@
-import { Avatar, Button, Dropdown, Input, Space } from 'antd'
+import { Avatar, Button, Col, Dropdown, Space } from 'antd'
 import { useRouterState } from '@tanstack/react-router'
-import type { SearchProps } from 'antd/es/input'
 import styles from './desktopMenu.module.scss'
 import { UserOutlined } from '@ant-design/icons'
 import { loggedUserDropdownItems } from '../dropdownItems'
 import { useAuth } from '@/store/auth'
 import { router } from '@/app/router'
 import { Logo } from '@/assets/logo'
+import { Search } from '@/components/Search'
 
 export const DesktopMenu = () => {
   const pathname = useRouterState().location.pathname
@@ -14,9 +14,6 @@ export const DesktopMenu = () => {
   const { user } = useAuth()
 
   const showSearch = pathname !== '/login' && pathname !== '/register'
-
-  const onSearch: SearchProps['onSearch'] = (value, _e, info) =>
-    console.log(info?.source, value)
 
   return (
     <header className={styles.menu}>
@@ -30,13 +27,9 @@ export const DesktopMenu = () => {
           </button>
 
           {showSearch && (
-            <Input.Search
-              placeholder="Wyszukaj wykonawcę"
-              allowClear
-              size="large"
-              onSearch={onSearch}
-              className={styles.search}
-            />
+            <Col span={20}>
+              <Search />
+            </Col>
           )}
         </div>
 

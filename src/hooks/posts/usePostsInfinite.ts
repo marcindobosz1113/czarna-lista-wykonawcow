@@ -2,12 +2,12 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import type { Post } from '@/hooks/posts/useGetPosts'
 import { api } from '@/api/client'
 
-export const usePostsInfinite = (sort?: string) =>
+export const usePostsInfinite = (sort?: string, search?: string) =>
   useInfiniteQuery({
-    queryKey: ['posts', sort],
+    queryKey: ['posts', sort, search],
     queryFn: async ({ pageParam = 1 }) => {
       const response = await api.get<Post[]>(
-        `/api/posts?page=${pageParam}&sort=${sort || ''}`
+        `/api/posts?page=${pageParam}&sort=${sort || ''}&search=${search || ''}`
       )
 
       return response
