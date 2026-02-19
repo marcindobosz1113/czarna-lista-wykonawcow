@@ -1,3 +1,4 @@
+import { categoriesLabels } from '@/layout/homepage/constants'
 import { POST_CATEGORIES } from '@/layout/homepage/types'
 import { useSearch } from '@/store/search'
 
@@ -8,7 +9,8 @@ interface PostCategoryBadgeProps {
 const badgeStyles = {
   padding: '0.75rem 1.25rem',
   borderRadius: '5rem',
-  fontWeight: 500,
+  textTransform: 'uppercase',
+  fontWeight: 600,
   fontSize: '1.2rem',
   cursor: 'pointer',
 }
@@ -23,30 +25,21 @@ const styles = {
     color: '#3de153',
   },
   [POST_CATEGORIES.STRUCTURES]: {
-    background: '#FFF5F5',
-    color: '#E13D3D',
+    background: '#f9ffc5',
+    color: '#949e39',
   },
   [POST_CATEGORIES.FACADES]: {
-    background: '#FFF5F5',
-    color: '#E13D3D',
+    background: '#e5fcfc',
+    color: '#0cadc2',
   },
   [POST_CATEGORIES.ROOFS]: {
-    background: '#FFF5F5',
-    color: '#E13D3D',
+    background: '#ffdfc0',
+    color: '#a05601',
   },
   [POST_CATEGORIES.OTHER]: {
-    background: '#FFF5F5',
-    color: '#E13D3D',
+    background: '#d8d8d8',
+    color: '#525252',
   },
-}
-
-const labels = {
-  [POST_CATEGORIES.INTERIOR_FINISHING]: 'Wykończenia',
-  [POST_CATEGORIES.INSTALLATIONS]: 'Instalacje',
-  [POST_CATEGORIES.STRUCTURES]: 'Konstrukcje',
-  [POST_CATEGORIES.FACADES]: 'Elewacje',
-  [POST_CATEGORIES.ROOFS]: 'Dachy',
-  [POST_CATEGORIES.OTHER]: 'Inne',
 }
 
 export const PostCategoryBadge = ({ category }: PostCategoryBadgeProps) => {
@@ -70,7 +63,7 @@ export const PostCategoryBadge = ({ category }: PostCategoryBadgeProps) => {
       role="button"
       onClick={handleClick}
     >
-      {labels[category]}
+      {categoriesLabels[category]}
     </div>
   )
 }

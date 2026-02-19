@@ -21,7 +21,7 @@ export const PostCard = ({ post }: PostCardProps) => {
     _id,
     postType,
     text,
-    title,
+    contractorName,
     username,
     createdAt,
     rate,
@@ -78,7 +78,7 @@ export const PostCard = ({ post }: PostCardProps) => {
       )}
 
       <Row>
-        <span className={styles.postTitle}>{title}</span>
+        <span className={styles.postTitle}>{contractorName}</span>
       </Row>
 
       <Row className={styles.postText}>

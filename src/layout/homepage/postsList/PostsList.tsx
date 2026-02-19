@@ -19,6 +19,7 @@ export const PostsList = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading,
   } = usePostsInfinite(sort, debounceSearch, category, postType)
 
   const observer = useRef<IntersectionObserver | null>(null)
@@ -44,7 +45,7 @@ export const PostsList = () => {
     [isFetchingNextPage, hasNextPage, fetchNextPage]
   )
 
-  return !posts ? (
+  return !posts || isLoading ? (
     <Col>
       <PostCardSkeleton />
       <PostCardSkeleton />

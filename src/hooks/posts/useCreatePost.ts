@@ -4,7 +4,7 @@ import { message } from 'antd'
 
 interface PostData {
   postType: string
-  title: string
+  contractorName: string
   text: string
   rate: number
   location: string
@@ -15,7 +15,7 @@ interface PostData {
 export const useCreatePost = () => {
   return useMutation({
     mutationFn: ({
-      title,
+      contractorName,
       text,
       images,
       location,
@@ -25,7 +25,7 @@ export const useCreatePost = () => {
     }: PostData) => {
       const formData = new FormData()
       formData.append('postType', postType)
-      formData.append('title', title)
+      formData.append('contractorName', contractorName)
       formData.append('text', text)
       formData.append('location', location)
       formData.append('rate', String(rate))

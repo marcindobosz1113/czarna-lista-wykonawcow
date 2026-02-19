@@ -1,3 +1,4 @@
+import { typesLabels } from '@/layout/homepage/constants'
 import { POST_TYPES } from '@/layout/homepage/types'
 import { useSearch } from '@/store/search'
 
@@ -26,12 +27,6 @@ const styles = {
   [POST_TYPES.QUESTION]: { background: '#faf9e9', color: '#dfbf31' },
 }
 
-const labels = {
-  [POST_TYPES.REPORT]: 'Zgłoszenie',
-  [POST_TYPES.APPROVAL]: 'Pochwała',
-  [POST_TYPES.QUESTION]: 'Pytanie',
-}
-
 export const PostTypeBadge = ({ postType }: PostTypeBadgeProps) => {
   const { postType: currentPostType, setPostType } = useSearch()
 
@@ -53,7 +48,7 @@ export const PostTypeBadge = ({ postType }: PostTypeBadgeProps) => {
       role="button"
       onClick={handleClick}
     >
-      {labels[postType]}
+      {typesLabels[postType]}
     </div>
   )
 }

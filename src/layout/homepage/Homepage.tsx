@@ -9,6 +9,7 @@ import { useBreakpoint } from '@/hooks/breakpoints/useBreakpoints'
 import { useSearch } from '@/store/search'
 import { PostCategoryBadge } from '@/components/PostCategoryBadge'
 import { PostTypeBadge } from '@/components/PostTypeBadge'
+import { Filter } from '@/layout/homepage/filters/Filters'
 
 export const Homepage = () => {
   const { sort, setSort } = usePostsSort()
@@ -57,7 +58,11 @@ export const Homepage = () => {
         </Row>
       </Col>
 
-      {isDesktop && <Col span={8}>Right side container</Col>}
+      {isDesktop && (
+        <Col span={8}>
+          <Filter />
+        </Col>
+      )}
     </Row>
   )
 }

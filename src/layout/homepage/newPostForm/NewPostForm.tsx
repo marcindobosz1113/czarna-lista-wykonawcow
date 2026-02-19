@@ -27,7 +27,7 @@ import { useSearch } from '@/store/search'
 
 type FieldType = {
   postType: string
-  title: string
+  contractorName: string
   text: string
   location: string
   rate: number
@@ -55,7 +55,7 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
     cretePost.mutate(
       {
         postType: form.getFieldValue('postType'),
-        title: form.getFieldValue('title'),
+        contractorName: form.getFieldValue('contractorName'),
         text: form.getFieldValue('text'),
         location: form.getFieldValue('location'),
         category: form.getFieldValue('category'),
@@ -66,10 +66,11 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
       },
       {
         onSuccess: () => {
+          setIsModalOpen(false)
           refetchPosts()
           setSort(SORT_TYPES.NEWEST)
           setSearch('')
-          setIsModalOpen(false)
+          setPostType('')
           form.resetFields()
           setImages([])
           setRate(1)
@@ -108,7 +109,6 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
             rules={[{ required: true, message: 'Wybierz kategorię' }]}
           >
             <Select
-              onChange={setPostType}
               allowClear
               options={[
                 {
@@ -131,14 +131,14 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
 
         <Col span={12}>
           <Form.Item<FieldType>
-            label="Tytuł"
-            name="title"
+            label="Wykonawca"
+            name="contractorName"
             rules={[
-              { required: true, message: 'Podaj tytuł' },
-              { min: 6, message: 'Napisz dłuższy tytuł, min. 6 znaków' },
+              { required: true, message: 'Podaj nazwę wykonawcy' },
+              { min: 6, message: 'Napisz dłuższą nazwę, min. 6 znaków' },
             ]}
           >
-            <Input placeholder="Wpisz tytuł" />
+            <Input placeholder="Imię i nazwisko / Firma" />
           </Form.Item>
         </Col>
 

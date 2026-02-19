@@ -1,0 +1,36 @@
+@use '@/styles/variables.scss' as *;
+
+.filtersContainer {
+  background: $white;
+  padding: 2.4rem;
+  border-radius: 0.8rem;
+  box-shadow: $container-box-shadow;
+}
+
+.title {
+  color: $gray;
+  font-weight: 600;
+}
+
+.category {
+  border: none;
+  box-shadow: none !important;
+  transition: 0.4s;
+
+  &:hover {
+    border: none !important;
+
+    transform: translateX(5px);
+  }
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: red;
+}
+
+.active {
+  transform: translateX(5px);
+}

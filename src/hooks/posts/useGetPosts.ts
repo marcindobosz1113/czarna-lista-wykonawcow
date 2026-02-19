@@ -6,7 +6,7 @@ export interface Post {
   images: string[]
   postType: POST_TYPES
   text: string
-  title: string
+  contractorName: string
   username: string | null
   userId: number | null
   location: string
