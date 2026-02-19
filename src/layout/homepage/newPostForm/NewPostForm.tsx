@@ -17,7 +17,11 @@ import { useCreatePost } from '@/hooks/posts/useCreatePost'
 import { ImagesUploader } from '@/components/ImagesUploader'
 import FormItem from 'antd/es/form/FormItem'
 import { usePostsInfinite } from '@/hooks/posts/usePostsInfinite'
-import { POST_TYPES, SORT_TYPES } from '@/layout/homepage/types'
+import {
+  POST_CATEGORIES,
+  POST_TYPES,
+  SORT_TYPES,
+} from '@/layout/homepage/types'
 import { usePostsSort } from '@/store/postsSort'
 import { useSearch } from '@/store/search'
 
@@ -26,6 +30,8 @@ type FieldType = {
   title: string
   text: string
   location: string
+  rate: number
+  category: string
 }
 
 interface NewPostFormProps {
@@ -52,6 +58,7 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
         title: form.getFieldValue('title'),
         text: form.getFieldValue('text'),
         location: form.getFieldValue('location'),
+        category: form.getFieldValue('category'),
         rate: rate,
         images: images
           .map((file) => file.originFileObj as File | undefined)
@@ -75,7 +82,7 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
   return (
     <Form form={form} name="newPost" layout="vertical" onFinish={onSubmit}>
       <Row gutter={24}>
-        <Col span={24}>
+        <Col span={12}>
           <Form.Item<FieldType>
             label="Typ zgłoszenia"
             name="postType"
@@ -90,6 +97,34 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
                 { value: POST_TYPES.QUESTION, label: 'Zadaj pytanie' },
               ]}
               placeholder="Wybierz typ zgłoszenia"
+            />
+          </Form.Item>
+        </Col>
+
+        <Col span={12}>
+          <Form.Item<FieldType>
+            label="Kategoria"
+            name="category"
+            rules={[{ required: true, message: 'Wybierz kategorię' }]}
+          >
+            <Select
+              onChange={setPostType}
+              allowClear
+              options={[
+                {
+                  value: POST_CATEGORIES.INTERIOR_FINISHING,
+                  label: 'Wykończenia',
+                },
+                {
+                  value: POST_CATEGORIES.INSTALLATIONS,
+                  label: 'Instalację',
+                },
+                { value: POST_CATEGORIES.STRUCTURES, label: 'Konstrukcje' },
+                { value: POST_CATEGORIES.FACADES, label: 'Elewacje' },
+                { value: POST_CATEGORIES.ROOFS, label: 'Dachy' },
+                { value: POST_CATEGORIES.OTHER, label: 'Inne' },
+              ]}
+              placeholder="Wybierz kategorię"
             />
           </Form.Item>
         </Col>
@@ -114,6 +149,10 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
             rules={[
               { required: true, message: 'Podaj lokalizacje' },
               { min: 3, message: 'Napisz dłuższą lokalizację, min. 3 znaki' },
+              {
+                max: 25,
+                message: 'Napisz krótszą lokalizację, max. 25 znaków',
+              },
             ]}
           >
             <Input placeholder="Np. Warszawa" />
@@ -133,16 +172,12 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
       </Form.Item>
 
       {!isQuestionTypePost && (
-        <FormItem<FieldType>>
-          <Space>
-            <span>Ocena wykonawcy:</span>
-            <Rate
-              size="small"
-              onChange={setRate}
-              defaultValue={1}
-              value={rate}
-            />
-          </Space>
+        <FormItem<FieldType>
+          name="rate"
+          layout="horizontal"
+          label="Ocena wykonawcy:"
+        >
+          <Rate size="small" onChange={setRate} defaultValue={1} value={rate} />
         </FormItem>
       )}
 

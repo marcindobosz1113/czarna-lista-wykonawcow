@@ -9,6 +9,7 @@ interface PostData {
   rate: number
   location: string
   images: File[]
+  category: string
 }
 
 export const useCreatePost = () => {
@@ -20,6 +21,7 @@ export const useCreatePost = () => {
       location,
       rate,
       postType,
+      category,
     }: PostData) => {
       const formData = new FormData()
       formData.append('postType', postType)
@@ -27,6 +29,7 @@ export const useCreatePost = () => {
       formData.append('text', text)
       formData.append('location', location)
       formData.append('rate', String(rate))
+      formData.append('category', category)
 
       images.forEach((image) => {
         formData.append('images', image)

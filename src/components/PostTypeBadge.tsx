@@ -1,4 +1,5 @@
 import { POST_TYPES } from '@/layout/homepage/types'
+import { useSearch } from '@/store/search'
 
 interface PostTypeBadgeProps {
   type: POST_TYPES
@@ -10,6 +11,7 @@ const badgeStyles = {
   textTransform: 'uppercase',
   fontWeight: 600,
   fontSize: '1.2rem',
+  cursor: 'pointer',
 }
 
 const styles = {
@@ -31,12 +33,16 @@ const labels = {
 }
 
 export const PostTypeBadge = ({ type }: PostTypeBadgeProps) => {
+  const { setType } = useSearch()
+
   return (
     <div
       style={{
         ...badgeStyles,
         ...styles[type],
       }}
+      role="button"
+      onClick={() => setType(type)}
     >
       {labels[type]}
     </div>

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../../api/client'
-import type { POST_TYPES } from '@/layout/homepage/types'
+import type { POST_CATEGORIES, POST_TYPES } from '@/layout/homepage/types'
 
 export interface Post {
   images: string[]
@@ -12,6 +12,7 @@ export interface Post {
   location: string
   createdAt: string
   updatedAt: string
+  category: POST_CATEGORIES
   rate: number
   _id: string
 }

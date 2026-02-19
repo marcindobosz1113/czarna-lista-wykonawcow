@@ -7,6 +7,8 @@ import styles from './postCard.module.scss'
 import { CommentOutlined, EnvironmentOutlined } from '@ant-design/icons'
 import { PostTypeBadge } from '@/components/PostTypeBadge'
 import { POST_TYPES } from '@/layout/homepage/types'
+import { PostCategoryBadge } from '@/components/PostCategoryBadge'
+import { useBreakpoint } from '@/hooks/breakpoints/useBreakpoints'
 
 const TEXT_MAX_LENGTH = 200
 
@@ -25,43 +27,48 @@ export const PostCard = ({ post }: PostCardProps) => {
     rate,
     images,
     location,
+    category,
   } = post
 
   const [expanded, setExpanded] = useState(false)
 
+  const { isMobile } = useBreakpoint()
+
   const isLong = text.length > TEXT_MAX_LENGTH
   const displayText = expanded ? text : text.slice(0, TEXT_MAX_LENGTH)
 
-  const isReportTypePost = postType === POST_TYPES.REPORT
+  const isQuestionTypePost = postType === POST_TYPES.QUESTION
 
   return (
     <Row key={_id} justify="start" className={styles.postContainer}>
-      <Row>
-        <Col span={16}>
-          <span className={styles.username}>
-            {username || 'Anonimowy użytkownik'}
-          </span>
+      <Row justify="space-between">
+        <Col>
+          <Space orientation="vertical">
+            <span className={styles.username}>
+              {username || 'Anonimowy użytkownik'}
+            </span>
+
+            <Space orientation="vertical">
+              <span>
+                <EnvironmentOutlined className={styles.location} /> {location}
+              </span>
+              <span className={styles.greyText}>
+                {dayjs(createdAt).format('DD-MM-YYYY')}
+              </span>
+            </Space>
+          </Space>
         </Col>
 
-        <Col span={8}>
-          <Row justify="end">
+        <Col>
+          <Space orientation={isMobile ? 'vertical' : 'horizontal'}>
+            <PostCategoryBadge category={category} />
+
             <PostTypeBadge type={postType} />
-          </Row>
-        </Col>
-
-        <Col span={24}>
-          <Space>
-            <span>
-              <EnvironmentOutlined className={styles.location} /> {location}
-            </span>
-            <span className={styles.greyText}>
-              {dayjs(createdAt).format('DD-MM-YYYY')}
-            </span>
           </Space>
         </Col>
       </Row>
 
-      {isReportTypePost && (
+      {!isQuestionTypePost && (
         <Row>
           <Space>
             <Rate value={rate} disabled size="small" />

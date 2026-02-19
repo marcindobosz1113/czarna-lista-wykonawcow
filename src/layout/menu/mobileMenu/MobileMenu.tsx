@@ -13,6 +13,7 @@ import styles from './mobileMenu.module.scss'
 import { CloseOutlined, MenuOutlined, UserOutlined } from '@ant-design/icons'
 import { LoggedUserMenuItems, notLoggedUserMenuItems } from '../menuItems'
 import { useAuth } from '@/store/auth'
+import { router } from '@/app/router'
 import { ButtonTransparent } from '@/components/ButtonTransparent'
 import { Search } from '@/components/Search'
 
@@ -30,10 +31,35 @@ export const MobileMenu = () => {
     message.success('Zostałeś wylogowany')
   }
 
+  const navigateToLogin = () => {
+    router.navigate({ to: '/login' })
+  }
+
+  const navigateToRegister = () => {
+    router.navigate({ to: '/register' })
+  }
+
   const loggedUserDropdownItems: MenuProps['items'] = [
     {
       key: 1,
       label: <ButtonTransparent onClick={onLogout}>Wyloguj</ButtonTransparent>,
+    },
+  ]
+
+  const notloggedUserDropdownItems: MenuProps['items'] = [
+    {
+      key: 1,
+      label: (
+        <ButtonTransparent onClick={navigateToLogin}>Zaloguj</ButtonTransparent>
+      ),
+    },
+    {
+      key: 2,
+      label: (
+        <ButtonTransparent onClick={navigateToRegister}>
+          Zarejestuj
+        </ButtonTransparent>
+      ),
     },
   ]
 
@@ -70,7 +96,9 @@ export const MobileMenu = () => {
         <Col span={2} className={styles.dropdownContainer}>
           <Dropdown
             menu={{
-              items: loggedUserDropdownItems,
+              items: isLoggedIn
+                ? loggedUserDropdownItems
+                : notloggedUserDropdownItems,
             }}
           >
             <a onClick={(e) => e.preventDefault()}>

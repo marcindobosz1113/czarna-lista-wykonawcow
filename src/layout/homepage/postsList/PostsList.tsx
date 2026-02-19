@@ -10,7 +10,7 @@ import { useDebounce } from '@/hooks/utils/useDebounce'
 
 export const PostsList = () => {
   const { sort } = usePostsSort()
-  const { search } = useSearch()
+  const { search, category, postType } = useSearch()
 
   const debounceSearch = useDebounce(search)
 
@@ -19,7 +19,7 @@ export const PostsList = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = usePostsInfinite(sort, debounceSearch)
+  } = usePostsInfinite(sort, debounceSearch, category, postType)
 
   const observer = useRef<IntersectionObserver | null>(null)
 
