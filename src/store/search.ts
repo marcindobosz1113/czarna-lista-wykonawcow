@@ -5,10 +5,12 @@ interface SearchState {
   search: string
   category?: POST_CATEGORIES
   postType?: POST_TYPES
+  contractorName?: string
 
   setSearch: (search: string) => void
   setCategory: (category?: POST_CATEGORIES) => void
   setPostType: (postType?: POST_TYPES) => void
+  setContractorName: (contractorName?: string) => void
 
   clearSearch: () => void
 }
@@ -18,17 +20,20 @@ export const useSearch = createStore<SearchState>(
     search: '',
     category: undefined,
     postType: undefined,
+    contractorName: undefined,
 
     setSearch: (search) =>
       set({ search, category: undefined, postType: undefined }),
     setCategory: (category) => set({ category, search: '' }),
     setPostType: (postType) => set({ postType, search: '' }),
+    setContractorName: (contractorName) => set({ contractorName, search: '' }),
 
     clearSearch: () =>
       set({
         search: '',
         postType: undefined,
         category: undefined,
+        contractorName: undefined,
       }),
   }),
   'search'

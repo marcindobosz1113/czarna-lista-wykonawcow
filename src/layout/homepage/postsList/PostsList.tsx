@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react'
-import { Col } from 'antd'
+import { Col, Row } from 'antd'
 import { PostCardSkeleton } from '@/components/PostCardSkeleton'
 
 import { PostCard } from '@/layout/homepage/postCard/PostCard'
@@ -7,10 +7,12 @@ import { usePostsInfinite } from '@/hooks/posts/usePostsInfinite'
 import { usePostsSort } from '@/store/postsSort'
 import { useSearch } from '@/store/search'
 import { useDebounce } from '@/hooks/utils/useDebounce'
+import { ExceptionOutlined } from '@ant-design/icons'
+import styles from './PostList.module.scss'
 
 export const PostsList = () => {
   const { sort } = usePostsSort()
-  const { search, category, postType } = useSearch()
+  const { search, category, postType, contractorName } = useSearch()
 
   const debounceSearch = useDebounce(search)
 
@@ -20,7 +22,7 @@ export const PostsList = () => {
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-  } = usePostsInfinite(sort, debounceSearch, category, postType)
+  } = usePostsInfinite(sort, debounceSearch, category, postType, contractorName)
 
   const observer = useRef<IntersectionObserver | null>(null)
 
@@ -45,12 +47,30 @@ export const PostsList = () => {
     [isFetchingNextPage, hasNextPage, fetchNextPage]
   )
 
-  return !posts || isLoading ? (
-    <Col>
-      <PostCardSkeleton />
-      <PostCardSkeleton />
-    </Col>
-  ) : (
+  const postsLength = posts?.pages[0].length
+
+  if (!postsLength && !isLoading) {
+    return (
+      <Row justify="center" className={styles.noDataContainer}>
+        <ExceptionOutlined className={styles.noDataIcon} />
+        <span className={styles.noDataTitle}>Brak wyników</span>
+        <span className={styles.noDataText}>
+          Zmień filtry lub wyszukiwaną frazę
+        </span>
+      </Row>
+    )
+  }
+
+  if (!postsLength || isLoading) {
+    return (
+      <Col>
+        <PostCardSkeleton />
+        <PostCardSkeleton />
+      </Col>
+    )
+  }
+
+  return (
     <>
       {posts?.pages?.map((page, pageIndex) =>
         page.map((post, postIndex) => {

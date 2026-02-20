@@ -9,14 +9,16 @@ import { POST_TYPES } from '@/layout/homepage/types'
 import { PostCategoryBadge } from '@/components/PostCategoryBadge'
 import { useBreakpoint } from '@/hooks/breakpoints/useBreakpoints'
 import type { Post } from '@/hooks/posts/usePostsInfinite'
+import { Link } from '@tanstack/react-router'
 
 const TEXT_MAX_LENGTH = 200
 
 interface PostCardProps {
   post: Post
+  hideCommentButton?: boolean
 }
 
-export const PostCard = ({ post }: PostCardProps) => {
+export const PostCard = ({ post, hideCommentButton }: PostCardProps) => {
   const {
     _id,
     postType,
@@ -110,13 +112,18 @@ export const PostCard = ({ post }: PostCardProps) => {
         </Row>
       )}
 
-      <Divider size="small" />
+      {!hideCommentButton && (
+        <>
+          <Divider size="small" />
 
-      <Row>
-        <Button>
-          <CommentOutlined className={styles.commentIcon} /> Komentarze
-        </Button>
-      </Row>
+          <Row>
+            <Button>
+              <CommentOutlined className={styles.commentIcon} />{' '}
+              <Link to={`/posts/${post._id}`}>Komentarze</Link>
+            </Button>
+          </Row>
+        </>
+      )}
     </Row>
   )
 }

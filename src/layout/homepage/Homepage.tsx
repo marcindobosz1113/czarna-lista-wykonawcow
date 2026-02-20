@@ -11,10 +11,11 @@ import { PostCategoryBadge } from '@/components/PostCategoryBadge'
 import { PostTypeBadge } from '@/components/PostTypeBadge'
 import { Filter } from '@/layout/homepage/filters/Filters'
 import { MostReported } from '@/layout/homepage/mostReported/MostReported'
+import { ContractorNameBadge } from '@/components/ContractorNameBadge'
 
 export const Homepage = () => {
   const { sort, setSort } = usePostsSort()
-  const { postType, category, clearSearch } = useSearch()
+  const { postType, category, contractorName, clearSearch } = useSearch()
 
   const { isDesktop } = useBreakpoint()
 
@@ -25,6 +26,7 @@ export const Homepage = () => {
           <NewPostButtonWithModal />
 
           <Select
+            size="large"
             className={styles.sortSelect}
             onChange={setSort}
             options={[
@@ -43,14 +45,20 @@ export const Homepage = () => {
         </Row>
 
         <Row justify="end">
-          <Space size="middle">
+          <Button type="primary" onClick={clearSearch} size="large">
+            Wyczyść filtry
+          </Button>
+        </Row>
+
+        <Row justify="end">
+          <Space>
+            {contractorName && (
+              <ContractorNameBadge contractorName={contractorName} />
+            )}
+
             {category && <PostCategoryBadge category={category} />}
 
             {postType && <PostTypeBadge postType={postType} />}
-
-            <Button type="primary" onClick={clearSearch}>
-              Wyczyść filtry
-            </Button>
           </Space>
         </Row>
 

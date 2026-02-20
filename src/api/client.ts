@@ -15,7 +15,9 @@ export const api = {
       useAuth.getState().logout()
     }
 
-    if (!response.ok) throw new Error('API error')
+    if (!response.ok) {
+      throw new Error('API error')
+    }
 
     return response.json()
   },

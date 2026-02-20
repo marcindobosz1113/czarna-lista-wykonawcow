@@ -22,13 +22,14 @@ export const usePostsInfinite = (
   sort?: string,
   search?: string,
   category?: POST_CATEGORIES,
-  type?: POST_TYPES
+  type?: POST_TYPES,
+  contractorName?: string
 ) =>
   useInfiniteQuery({
-    queryKey: ['posts', sort, search, category, type],
+    queryKey: ['posts', sort, search, category, type, contractorName],
     queryFn: async ({ pageParam = 1 }) => {
       const params = normalize(
-        `?page=${pageParam}&sort=${sort || ''}&search=${search || ''}&category=${category || ''}&postType=${type || ''}`
+        `?page=${pageParam}&sort=${sort || ''}&search=${search || ''}&category=${category || ''}&postType=${type || ''}&contractorName=${contractorName || ''}`
       )
       const response = await api.get<Post[]>(`/api/posts${params}`)
 

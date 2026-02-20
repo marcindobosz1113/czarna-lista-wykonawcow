@@ -1,0 +1,22 @@
+@use '@/styles/variables.scss' as *;
+
+.noDataContainer {
+  margin-top: 5rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.noDataIcon {
+  font-size: 7.5rem;
+  color: $gray;
+}
+
+.noDataTitle {
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+.noDataText {
+  font-weight: 500;
+}

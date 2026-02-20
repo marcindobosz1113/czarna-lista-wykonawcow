@@ -1,6 +1,7 @@
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 
 import { Menu } from '../layout/menu/Menu'
+import { Footer } from '@/layout/footer/Footer'
 import styles from '@/styles/root.module.scss'
 
 export const Route = createRootRoute({
@@ -11,7 +12,7 @@ export const Route = createRootRoute({
         <div className={styles.container}>
           <Outlet />
         </div>
-        <div>© 2026 Czarna lista wykonawców. Wszystkie prawa zastrzeżone.</div>
+        <Footer />
       </>
     )
   },

@@ -1,0 +1,11 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  margin: 0 auto;
+  margin-top: 5rem;
+  width: 75%;
+
+  @media (max-width: 1200px) {
+    width: 100%;
+  }
+}
