@@ -1,11 +1,23 @@
 @use '@/styles/variables.scss' as *;
 
+.backButton {
+  margin: 2rem 0;
+}
+
 .container {
   margin: 0 auto;
-  margin-top: 5rem;
-  width: 75%;
 
   @media (max-width: 1200px) {
     width: 100%;
   }
+}
+
+.commentsContainer {
+  padding: 2.4rem;
+  border: 1px solid $border-color;
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  display: flex;
+  justify-content: space-between;
 }

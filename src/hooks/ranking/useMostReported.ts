@@ -10,7 +10,9 @@ export const useMostReported = () =>
   useQuery({
     queryKey: ['getMostRated'],
     queryFn: async () => {
-      const response = await api.get<MostReported[]>('/api/posts/mostReported')
+      const response = await api.get<MostReported[]>(
+        '/api/ranking/mostReported'
+      )
 
       return response
     },

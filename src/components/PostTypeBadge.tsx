@@ -4,6 +4,7 @@ import { useSearch } from '@/store/search'
 
 interface PostTypeBadgeProps {
   postType: POST_TYPES
+  badgeReadOnly?: boolean
 }
 
 const badgeStyles = {
@@ -24,13 +25,20 @@ const styles = {
     background: '#eafaeb',
     color: '#20df49',
   },
-  [POST_TYPES.QUESTION]: { background: '#faf9e9', color: '#dfbf31' },
+  [POST_TYPES.QUESTION]: { background: '#FFFBEB', color: '#dfbf31' },
 }
 
-export const PostTypeBadge = ({ postType }: PostTypeBadgeProps) => {
+export const PostTypeBadge = ({
+  postType,
+  badgeReadOnly,
+}: PostTypeBadgeProps) => {
   const { postType: currentPostType, setPostType } = useSearch()
 
   const handleClick = () => {
+    if (badgeReadOnly) {
+      return
+    }
+
     if (postType === currentPostType) {
       setPostType(undefined)
       return

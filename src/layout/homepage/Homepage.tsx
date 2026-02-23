@@ -19,6 +19,8 @@ export const Homepage = () => {
 
   const { isDesktop } = useBreakpoint()
 
+  const showFilters = contractorName || category || postType
+
   return (
     <Row className={styles.homepageContainer} gutter={20}>
       <Col span={isDesktop ? 16 : 24} className={styles.postUtilsContainer}>
@@ -44,23 +46,26 @@ export const Homepage = () => {
           />
         </Row>
 
-        <Row justify="end">
-          <Button type="primary" onClick={clearSearch} size="large">
-            Wyczyść filtry
-          </Button>
-        </Row>
+        {showFilters && (
+          <Row justify="end">
+            <Button type="primary" onClick={clearSearch} size="large">
+              Wyczyść filtry
+            </Button>
+          </Row>
+        )}
+        {showFilters && (
+          <Row justify="end">
+            <Space>
+              {contractorName && (
+                <ContractorNameBadge contractorName={contractorName} />
+              )}
 
-        <Row justify="end">
-          <Space>
-            {contractorName && (
-              <ContractorNameBadge contractorName={contractorName} />
-            )}
+              {category && <PostCategoryBadge category={category} />}
 
-            {category && <PostCategoryBadge category={category} />}
-
-            {postType && <PostTypeBadge postType={postType} />}
-          </Space>
-        </Row>
+              {postType && <PostTypeBadge postType={postType} />}
+            </Space>
+          </Row>
+        )}
 
         <Row className={styles.postsContainer} justify="center">
           <PostsList />

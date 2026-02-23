@@ -1,6 +1,6 @@
 import { Button, Col, Row, Skeleton, Space } from 'antd'
 import styles from './MostReported.module.scss'
-import { useMostReported } from '@/hooks/posts/useMostReported'
+import { useMostReported } from '@/hooks/ranking/useMostReported'
 import { useSearch } from '@/store/search'
 
 export const MostReported = () => {

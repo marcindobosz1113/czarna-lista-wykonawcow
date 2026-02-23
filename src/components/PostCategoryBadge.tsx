@@ -4,6 +4,7 @@ import { useSearch } from '@/store/search'
 
 interface PostCategoryBadgeProps {
   category: POST_CATEGORIES
+  badgeReadOnly?: boolean
 }
 
 const badgeStyles = {
@@ -42,10 +43,17 @@ const styles = {
   },
 }
 
-export const PostCategoryBadge = ({ category }: PostCategoryBadgeProps) => {
+export const PostCategoryBadge = ({
+  category,
+  badgeReadOnly,
+}: PostCategoryBadgeProps) => {
   const { category: currentCategory, setCategory } = useSearch()
 
   const handleClick = () => {
+    if (badgeReadOnly) {
+      return
+    }
+
     if (category === currentCategory) {
       setCategory(undefined)
       return

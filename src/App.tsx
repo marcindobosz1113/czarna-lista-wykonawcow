@@ -18,11 +18,11 @@ export const App = () => {
       theme={{
         components: {
           Button: {
-            boxShadow: 'none',
+            primaryShadow: '',
           },
         },
         token: {
-          colorPrimary: '#34495e',
+          colorPrimary: '#1a2540',
         },
       }}
     >

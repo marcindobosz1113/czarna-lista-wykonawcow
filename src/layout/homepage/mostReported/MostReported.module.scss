@@ -5,6 +5,7 @@
   padding: 2.4rem;
   border-radius: 0.8rem;
   box-shadow: $container-box-shadow;
+  border: 1px solid $border-color;
 }
 
 .spacer {
@@ -20,12 +21,11 @@
   width: 100%;
   border: none;
   box-shadow: none !important;
-  transition: 0.4s;
+  transition: 0.2s;
   justify-content: flex-start;
 
   &:hover {
     border: none !important;
-
     transform: translateX(5px);
   }
 }

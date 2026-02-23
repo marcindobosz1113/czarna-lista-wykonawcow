@@ -1,9 +1,9 @@
-import { useMutation } from '@tanstack/react-query'
 import { message } from 'antd'
-import { useAuth } from '../../store/auth'
-import { api } from '../../api/client'
-import type { LoginPayload, LoginResponse } from '../../types/auth'
-import { router } from '../../app/router'
+import { api } from '@/api/client'
+import { router } from '@/app/router'
+import { useAuth } from '@/store/auth'
+import type { LoginPayload, LoginResponse } from '@/types/auth'
+import { useMutation } from '@tanstack/react-query'
 
 export const useLogin = () => {
   const setToken = useAuth((s) => s.setToken)
