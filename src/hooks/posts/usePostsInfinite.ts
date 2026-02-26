@@ -1,7 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { api } from '@/api/client'
 import type { POST_CATEGORIES, POST_TYPES } from '@/layout/homepage/types'
-import { normalize } from '@/utils/normalize'
 
 export interface Post {
   images: string[]
@@ -18,6 +17,13 @@ export interface Post {
   _id: string
 }
 
+export interface PostsResponse {
+  page: number
+  posts: Post[]
+  total: number
+  totalPages: number
+}
+
 export const usePostsInfinite = (
   sort?: string,
   search?: string,
@@ -28,14 +34,22 @@ export const usePostsInfinite = (
   useInfiniteQuery({
     queryKey: ['posts', sort, search, category, type, contractorName],
     queryFn: async ({ pageParam = 1 }) => {
-      const params = normalize(
-        `?page=${pageParam}&sort=${sort || ''}&search=${search || ''}&category=${category || ''}&postType=${type || ''}&contractorName=${contractorName || ''}`
-      )
-      const response = await api.get<Post[]>(`/api/posts${params}`)
+      console.log({ category })
+      const categoryQuery = category ? `&category=${category}` : ''
+      const sortQuery = sort ? `&sort=${sort}` : ''
+      const searchQuery = search ? `&search=${search}` : ''
+      const typeQuery = type ? `&postType=${type}` : ''
+      const contractorNameQuery = contractorName
+        ? `&contractorName=${contractorName}`
+        : ''
 
-      return response
+      const params = `?page=${pageParam}${sortQuery}${searchQuery}${categoryQuery}${typeQuery}${contractorNameQuery}`
+
+      const response = await api.get<PostsResponse>(`/api/posts${params}`)
+
+      return response.data
     },
     getNextPageParam: (lastPage, pages) =>
-      lastPage.length < 10 ? undefined : pages.length + 1,
+      lastPage.posts.length < 10 ? undefined : pages.length + 1,
     initialPageParam: 1,
   })

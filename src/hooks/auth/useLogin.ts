@@ -11,9 +11,11 @@ export const useLogin = () => {
 
   return useMutation({
     mutationFn: (data: LoginPayload) =>
-      api.post<LoginResponse, LoginPayload>('/auth/login', data),
+      api.post<LoginResponse, LoginPayload>('/api/auth/login', data),
 
-    onSuccess: (data) => {
+    onSuccess: (response) => {
+      const { data } = response
+
       setToken(data.token)
       setUser(data.user)
 

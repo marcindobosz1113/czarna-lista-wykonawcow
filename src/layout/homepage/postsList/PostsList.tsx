@@ -47,7 +47,7 @@ export const PostsList = () => {
     [isFetchingNextPage, hasNextPage, fetchNextPage]
   )
 
-  const postsLength = posts?.pages[0].length
+  const postsLength = posts?.pages[0].posts.length
 
   if (!postsLength && !isLoading) {
     return (
@@ -73,10 +73,10 @@ export const PostsList = () => {
   return (
     <>
       {posts?.pages?.map((page, pageIndex) =>
-        page.map((post, postIndex) => {
+        page?.posts.map((post, postIndex) => {
           const isLast =
             pageIndex === posts.pages.length - 1 &&
-            postIndex === page.length - 1
+            postIndex === page.posts.length - 1
 
           if (isLast) {
             return (

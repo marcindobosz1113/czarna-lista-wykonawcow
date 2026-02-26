@@ -10,9 +10,9 @@ export const useMe = () =>
 
       if (!token) return null
 
-      const response = await api.get<AuthState['user']>('/auth/me')
+      const response = await api.get<AuthState['user']>('/api/auth/me')
 
-      return response
+      return response.data
     },
     retry: false,
     refetchOnWindowFocus: true,

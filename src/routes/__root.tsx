@@ -9,9 +9,9 @@ export const Route = createRootRoute({
     return (
       <>
         <Menu />
-        <div className={styles.container}>
+        <main className={styles.container}>
           <Outlet />
-        </div>
+        </main>
         <Footer />
       </>
     )

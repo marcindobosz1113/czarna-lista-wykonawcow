@@ -14,6 +14,6 @@ export const useMostReported = () =>
         '/api/ranking/mostReported'
       )
 
-      return response
+      return response.data
     },
   })

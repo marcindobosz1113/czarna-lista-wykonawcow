@@ -17,6 +17,6 @@ export const useGetComments = (postId: number) =>
     queryFn: async () => {
       const response = await api.get<Comment[]>(`/api/comments/${postId}`)
 
-      return response
+      return response.data
     },
   })

@@ -45,8 +45,19 @@
 }
 
 .logoButton {
+  display: flex;
   cursor: pointer;
   background: transparent;
   border: none;
   outline: none;
+}
+
+.topLogoText {
+  white-space: nowrap;
+  font-size: 2.5rem;
+}
+
+.bottomLogoText {
+  font-size: 1.5rem;
+  color: $gray;
 }

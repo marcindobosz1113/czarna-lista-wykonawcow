@@ -7,7 +7,7 @@ export const Route = createFileRoute('/posts/$postId')({
   loader: async ({ params }) => {
     const response = await api.get(`/api/posts/${params.postId}`)
 
-    return response
+    return response.data
   },
   errorComponent: NoPostFound,
   component: PostPage,

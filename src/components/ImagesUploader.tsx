@@ -16,7 +16,7 @@ interface ImagesUploaderProps {
   setFileList: (files: UploadFile[]) => void
 }
 
-const MAX_FILES = 6
+const MAX_FILES = 5
 
 const getBase64 = (file: FileType): Promise<string> =>
   new Promise((resolve, reject) => {

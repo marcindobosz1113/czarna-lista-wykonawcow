@@ -113,9 +113,9 @@ export const PostCard = ({
                 <span>
                   <EnvironmentOutlined className={styles.location} /> {location}
                 </span>
-                <span className={styles.greyText}>
+                <Link className={styles.createdAt} to={`/posts/${post._id}`}>
                   {dayjs(createdAt).format('DD-MM-YYYY')}
-                </span>
+                </Link>
               </Space>
             </Space>
           </Col>
@@ -183,8 +183,9 @@ export const PostCard = ({
 
             <Row>
               <Button>
-                <CommentOutlined className={styles.commentIcon} />{' '}
-                <Link to={`/posts/${post._id}`}>Komentarze</Link>
+                <Link className={styles.linkToPost} to={`/posts/${post._id}`}>
+                  Komentarze <CommentOutlined className={styles.commentIcon} />
+                </Link>
               </Button>
             </Row>
           </>

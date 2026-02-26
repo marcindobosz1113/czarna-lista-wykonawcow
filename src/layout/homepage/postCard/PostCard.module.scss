@@ -80,3 +80,18 @@
   color: $gray;
   margin-left: 1rem;
 }
+
+.linkToPost {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.createdAt {
+  @extend .greyText;
+  text-decoration: underline;
+
+  &:hover {
+    color: $gray;
+  }
+}

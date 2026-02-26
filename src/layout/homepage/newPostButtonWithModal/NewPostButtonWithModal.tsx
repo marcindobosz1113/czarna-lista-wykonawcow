@@ -17,9 +17,6 @@ export const NewPostButtonWithModal = () => {
         open={isModalOpen}
         confirmLoading={false}
         onCancel={() => setIsModalOpen(false)}
-        okText="Dodaj"
-        cancelText="Anuluj"
-        style={{ top: -70 }}
         footer={() => <></>}
         width={{
           xs: '90%',

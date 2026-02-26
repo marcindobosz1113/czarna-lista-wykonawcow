@@ -5,11 +5,12 @@ import { UserOutlined } from '@ant-design/icons'
 import { loggedUserDropdownItems } from '../dropdownItems'
 import { useAuth } from '@/store/auth'
 import { router } from '@/app/router'
-import { Logo } from '@/assets/logo'
 import { Search } from '@/components/Search'
 
 export const DesktopMenu = () => {
-  const pathname = useRouterState().location.pathname
+  const {
+    location: { pathname },
+  } = useRouterState()
   const isLoggedIn = useAuth((state) => !!state.token)
   const { user } = useAuth()
 
@@ -23,7 +24,8 @@ export const DesktopMenu = () => {
             onClick={() => router.navigate({ to: '/' })}
             className={styles.logoButton}
           >
-            <Logo />
+            <span className={styles.topLogoText}>PRZED REMONTEM</span>
+            <span className={styles.bottomLogoText}>.pl</span>
           </button>
 
           {showSearch && (
@@ -39,16 +41,14 @@ export const DesktopMenu = () => {
               items: loggedUserDropdownItems,
             }}
           >
-            <a onClick={(e) => e.preventDefault()}>
-              <Space>
-                {<span className={styles.usernameText}>{user?.username}</span>}
-                <Avatar
-                  size={36}
-                  icon={<UserOutlined />}
-                  className={styles.userIcon}
-                />
-              </Space>
-            </a>
+            <Space>
+              {<span className={styles.usernameText}>{user?.username}</span>}
+              <Avatar
+                size={36}
+                icon={<UserOutlined />}
+                className={styles.userIcon}
+              />
+            </Space>
           </Dropdown>
         ) : (
           <Button

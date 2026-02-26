@@ -11,7 +11,7 @@ export interface RegisterPayload {
 
 export const useRegister = () => {
   return useMutation({
-    mutationFn: (data: RegisterPayload) => api.post('/auth/register', data),
+    mutationFn: (data: RegisterPayload) => api.post('/api/auth/register', data),
 
     onSuccess: () => {
       router.navigate({ to: '/login' })

@@ -1,7 +1,12 @@
 import { useAuth } from '../store/auth'
 
+interface PromiseResponse<T> {
+  data: T
+  success: boolean
+}
+
 export const api = {
-  get: async <T>(url: string): Promise<T> => {
+  get: async <T>(url: string): Promise<PromiseResponse<T>> => {
     const token = useAuth.getState().token
 
     const response = await fetch(import.meta.env.VITE_API_URL + url, {
@@ -25,7 +30,7 @@ export const api = {
   post: async <TResponse, TBody>(
     url: string,
     body: TBody
-  ): Promise<TResponse> => {
+  ): Promise<PromiseResponse<TResponse>> => {
     const token = useAuth.getState().token
 
     const isFormData = body instanceof FormData

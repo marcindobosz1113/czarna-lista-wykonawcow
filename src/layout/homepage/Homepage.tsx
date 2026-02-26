@@ -28,6 +28,7 @@ export const Homepage = () => {
           <NewPostButtonWithModal />
 
           <Select
+            aria-label="sortowanie"
             size="large"
             className={styles.sortSelect}
             onChange={setSort}
@@ -41,7 +42,7 @@ export const Homepage = () => {
               { value: SORT_TYPES.MOST_RATED, label: 'Najlepiej oceniane' },
               { value: SORT_TYPES.LESS_RATED, label: 'Najgorzej oceniane' },
             ]}
-            placeholder="Sor"
+            placeholder="Sortowanie"
             value={sort}
           />
         </Row>

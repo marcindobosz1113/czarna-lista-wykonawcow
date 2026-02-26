@@ -12,7 +12,6 @@ interface CommentData {
 export const useCreateComment = () =>
   useMutation({
     mutationFn: ({ postId, userId, username, text }: CommentData) => {
-      console.log({ username })
       const response = api.post(`/api/comments/${postId}`, {
         userId,
         text,
