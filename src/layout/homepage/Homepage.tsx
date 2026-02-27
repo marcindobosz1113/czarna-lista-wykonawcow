@@ -9,15 +9,18 @@ import { useBreakpoint } from '@/hooks/breakpoints/useBreakpoints'
 import { useSearch } from '@/store/search'
 import { PostCategoryBadge } from '@/components/PostCategoryBadge'
 import { PostTypeBadge } from '@/components/PostTypeBadge'
-import { Filter } from '@/layout/homepage/filters/Filters'
+import { CategoriesFilter } from '@/layout/homepage/filters/CategoriesFilters'
 import { MostReported } from '@/layout/homepage/mostReported/MostReported'
 import { ContractorNameBadge } from '@/components/ContractorNameBadge'
+import { MobilePostTypesFilters } from '@/layout/homepage/mobileFilters/MobilePostTypesFilters'
+import { PostTypesFilters } from '@/layout/homepage/filters/PostTypesFilters'
+import { MobileCategoriesFilters } from '@/layout/homepage/mobileFilters/MobileCategoriesFilters'
 
 export const Homepage = () => {
   const { sort, setSort } = usePostsSort()
   const { postType, category, contractorName, clearSearch } = useSearch()
 
-  const { isDesktop } = useBreakpoint()
+  const { isDesktop, isMobile } = useBreakpoint()
 
   const showFilters = contractorName || category || postType
 
@@ -35,10 +38,10 @@ export const Homepage = () => {
             options={[
               { value: SORT_TYPES.NEWEST, label: 'Najnowsze' },
               { value: SORT_TYPES.OLDEST, label: 'Najstarsze' },
-              // {
-              //   value: SORT_TYPES.MOST_COMENTED,
-              //   label: 'Najwięcej komentarzy',
-              // },
+              {
+                value: SORT_TYPES.MOST_COMENTED,
+                label: 'Najwięcej komentarzy',
+              },
               { value: SORT_TYPES.MOST_RATED, label: 'Najlepiej oceniane' },
               { value: SORT_TYPES.LESS_RATED, label: 'Najgorzej oceniane' },
             ]}
@@ -46,6 +49,13 @@ export const Homepage = () => {
             value={sort}
           />
         </Row>
+
+        {isMobile && (
+          <Space orientation="vertical" size="small">
+            <MobileCategoriesFilters />
+            <MobilePostTypesFilters />
+          </Space>
+        )}
 
         {showFilters && (
           <Row justify="end">
@@ -76,7 +86,8 @@ export const Homepage = () => {
       {isDesktop && (
         <Col span={8}>
           <Space orientation="vertical" size="middle" style={{ width: '100%' }}>
-            <Filter />
+            <CategoriesFilter />
+            <PostTypesFilters />
             <MostReported />
           </Space>
         </Col>

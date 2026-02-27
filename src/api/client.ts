@@ -29,7 +29,7 @@ export const api = {
 
   post: async <TResponse, TBody>(
     url: string,
-    body: TBody
+    body?: TBody
   ): Promise<PromiseResponse<TResponse>> => {
     const token = useAuth.getState().token
 

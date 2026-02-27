@@ -1,0 +1,16 @@
+@use '@/styles/variables.scss' as *;
+
+.categories {
+  overflow: scroll;
+  padding: 1rem 0;
+}
+
+.active {
+  background-color: $antd-primary;
+  color: $white;
+}
+
+.title {
+  color: $gray;
+  margin-bottom: 0.8rem;
+}

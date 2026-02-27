@@ -23,8 +23,7 @@ export const useBreakpoint = () => {
   return {
     width,
     active,
-    isMobile: width < breakpoints.sm,
-    isTablet: width >= breakpoints.sm && width < breakpoints.lg,
+    isMobile: width < breakpoints.lg,
     isDesktop: width >= breakpoints.lg,
   }
 }

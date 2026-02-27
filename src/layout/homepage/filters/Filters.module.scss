@@ -23,7 +23,7 @@
   &:hover {
     border: none !important;
     transform: translateX(5px);
-    background-color: $gray !important;
+    background-color: $antd-primary !important;
     color: $white !important;
   }
 }
@@ -36,6 +36,6 @@
 
 .active {
   transform: translateX(5px);
-  background-color: $gray;
+  background-color: $antd-primary;
   color: $white;
 }

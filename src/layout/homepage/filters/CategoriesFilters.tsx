@@ -1,31 +1,13 @@
 import { Button, Col, Row, Space } from 'antd'
 import styles from './Filters.module.scss'
 import { POST_CATEGORIES } from '@/layout/homepage/types'
-import { categoriesLabels } from '@/layout/homepage/constants'
+import {
+  categoriesDotStyles,
+  categoriesLabels,
+} from '@/layout/homepage/constants'
 import { useSearch } from '@/store/search'
 
-const dotStyles = {
-  [POST_CATEGORIES.INTERIOR_FINISHING]: {
-    backgroundColor: '#563de1',
-  },
-  [POST_CATEGORIES.INSTALLATIONS]: {
-    backgroundColor: '#3de153',
-  },
-  [POST_CATEGORIES.STRUCTURES]: {
-    backgroundColor: '#949e39',
-  },
-  [POST_CATEGORIES.FACADES]: {
-    backgroundColor: '#0cadc2',
-  },
-  [POST_CATEGORIES.ROOFS]: {
-    backgroundColor: '#a05601',
-  },
-  [POST_CATEGORIES.OTHER]: {
-    backgroundColor: '#525252',
-  },
-}
-
-export const Filter = () => {
+export const CategoriesFilter = () => {
   const { category: currentCategory, setCategory } = useSearch()
 
   const handleClick = (category: POST_CATEGORIES) => {
@@ -53,7 +35,7 @@ export const Filter = () => {
             className={`${styles.category} ${isCategoryActive(category) ? styles.active : ''}`}
             onClick={() => handleClick(category)}
           >
-            <div className={styles.dot} style={dotStyles[category]} />
+            <div className={styles.dot} style={categoriesDotStyles[category]} />
             {categoriesLabels[category]}
           </Button>
         ))}

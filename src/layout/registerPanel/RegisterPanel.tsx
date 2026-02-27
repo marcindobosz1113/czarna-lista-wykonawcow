@@ -42,7 +42,7 @@ export const RegisterPanel = () => {
             },
           ]}
         >
-          <Input />
+          <Input placeholder="twoj@email.com" />
         </Form.Item>
 
         <Form.Item<FieldType>
@@ -57,7 +57,7 @@ export const RegisterPanel = () => {
             },
           ]}
         >
-          <Input />
+          <Input placeholder="Jan Kowalski" />
         </Form.Item>
 
         <Form.Item<FieldType>
@@ -77,7 +77,7 @@ export const RegisterPanel = () => {
             },
           ]}
         >
-          <Input.Password />
+          <Input.Password placeholder="********" />
         </Form.Item>
 
         <Form.Item<FieldType>
@@ -96,7 +96,7 @@ export const RegisterPanel = () => {
             }),
           ]}
         >
-          <Input.Password />
+          <Input.Password placeholder="********" />
         </Form.Item>
 
         <Form.Item label={null}>

@@ -6,12 +6,12 @@
   top: 0;
   width: 100%;
   height: $menu-height;
-  background-color: $white;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0 2rem 1rem -1.5rem $box-shadow-color;
   padding: 0 1rem;
+  background-color: $antd-primary;
 }
 
 .menuContent {
@@ -37,11 +37,13 @@
 .usernameText {
   font-size: 1.5rem;
   cursor: pointer;
+  color: $white;
 }
 
 .userIcon {
   cursor: pointer;
   background-color: $primary;
+  border: 1px solid $white;
 }
 
 .logoButton {
@@ -53,6 +55,7 @@
 }
 
 .topLogoText {
+  color: $white;
   white-space: nowrap;
   font-size: 2.5rem;
 }

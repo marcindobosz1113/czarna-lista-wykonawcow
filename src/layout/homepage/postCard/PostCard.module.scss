@@ -27,6 +27,11 @@
   font-weight: 600;
 }
 
+.location {
+  font-size: 1.2rem;
+  color: $gray;
+}
+
 .locationIcon {
   color: $primary;
 }
@@ -90,8 +95,13 @@
 .createdAt {
   @extend .greyText;
   text-decoration: underline;
+  font-size: 1.2rem;
 
   &:hover {
     color: $gray;
   }
+}
+
+.likedPostIcon {
+  color: $star_yellow;
 }

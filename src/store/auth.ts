@@ -3,7 +3,7 @@ import { createStore } from './createStore'
 export interface AuthState {
   token: string | null
   user: {
-    id: string
+    _id: string
     username: string
     email: string
   } | null

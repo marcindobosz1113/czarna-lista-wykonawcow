@@ -13,7 +13,11 @@ import {
 import dayjs from 'dayjs'
 
 import styles from './postCard.module.scss'
-import { CommentOutlined, EnvironmentOutlined } from '@ant-design/icons'
+import {
+  CommentOutlined,
+  LikeFilled,
+  EnvironmentOutlined,
+} from '@ant-design/icons'
 import { PostTypeBadge } from '@/components/PostTypeBadge'
 import { POST_TYPES } from '@/layout/homepage/types'
 import { PostCategoryBadge } from '@/components/PostCategoryBadge'
@@ -23,6 +27,7 @@ import { Link } from '@tanstack/react-router'
 import type { Comment } from '@/hooks/comments/useGetComments'
 import { useCreateComment } from '@/hooks/comments/useCreateComment'
 import { useAuth } from '@/store/auth'
+import { useLikePost } from '@/hooks/posts/useLikePost'
 
 const TEXT_MAX_LENGTH = 200
 
@@ -61,15 +66,20 @@ export const PostCard = ({
     location,
     category,
   } = post
-  const userId = useAuth((state) => state.user?.id)
+  const userId = useAuth((state) => state.user?._id)
   const commentUsername = useAuth((state) => state.user?.username)
+
+  const isPostLiked = post.likedBy?.includes(userId ?? '')
 
   const [expanded, setExpanded] = useState(false)
   const [commentText, setCommentText] = useState('')
+  const [liked, setLiked] = useState(isPostLiked)
+  const [likesCount, setLikesCount] = useState(post.likedBy?.length)
 
   const { isMobile } = useBreakpoint()
 
   const createComment = useCreateComment()
+  const likePost = useLikePost()
 
   const isLong = text.length > TEXT_MAX_LENGTH
   const displayText = expanded ? text : text.slice(0, TEXT_MAX_LENGTH)
@@ -94,6 +104,23 @@ export const PostCard = ({
     )
   }
 
+  const handleLikePost = () => {
+    if (!userId) {
+      message.error('Zaloguj się aby potwierdzić.')
+      return
+    }
+
+    likePost.mutate(
+      { postId: post._id },
+      {
+        onSuccess: () => {
+          setLiked((prev) => !prev)
+          setLikesCount((prev) => prev + (liked ? -1 : 1))
+        },
+      }
+    )
+  }
+
   return (
     <>
       <Row
@@ -109,14 +136,13 @@ export const PostCard = ({
                 {username || 'Anonimowy użytkownik'}
               </span>
 
-              <Space orientation="vertical">
-                <span>
-                  <EnvironmentOutlined className={styles.location} /> {location}
-                </span>
-                <Link className={styles.createdAt} to={`/posts/${post._id}`}>
-                  {dayjs(createdAt).format('DD-MM-YYYY')}
-                </Link>
-              </Space>
+              <span className={styles.location}>
+                <EnvironmentOutlined className={styles.locationIcon} />{' '}
+                {location}
+              </span>
+              <Link className={styles.createdAt} to={`/posts/${post._id}`}>
+                {dayjs(createdAt).format('DD-MM-YYYY')}
+              </Link>
             </Space>
           </Col>
 
@@ -134,15 +160,6 @@ export const PostCard = ({
             </Space>
           </Col>
         </Row>
-
-        {!isQuestionTypePost && (
-          <Row>
-            <Space>
-              <Rate value={rate} disabled size="small" />
-              <span className={styles.greyText}>Ocena {rate || 1}/5</span>
-            </Space>
-          </Row>
-        )}
 
         <Row>
           <span className={styles.postTitle}>{contractorName}</span>
@@ -177,19 +194,36 @@ export const PostCard = ({
           </Row>
         )}
 
-        {!hideCommentButton && (
-          <>
-            <Divider size="small" />
+        {!isQuestionTypePost && (
+          <Row>
+            <Space>
+              <Rate value={rate} disabled size="small" />
+              <span className={styles.greyText}>Ocena {rate || 1}/5</span>
+            </Space>
+          </Row>
+        )}
 
-            <Row>
+        <Divider size="small" />
+
+        <Row gutter={20}>
+          <Col>
+            <Button onClick={handleLikePost}>
+              <LikeFilled className={liked ? styles.likedPostIcon : ''} />
+              {liked ? 'Polubiono' : 'Polub'} ({likesCount})
+            </Button>
+          </Col>
+
+          {!hideCommentButton && (
+            <Col>
               <Button>
                 <Link className={styles.linkToPost} to={`/posts/${post._id}`}>
-                  Komentarze <CommentOutlined className={styles.commentIcon} />
+                  <CommentOutlined className={styles.commentIcon} /> Komentarze
+                  ({post.commentsCount})
                 </Link>
               </Button>
-            </Row>
-          </>
-        )}
+            </Col>
+          )}
+        </Row>
       </Row>
 
       {showComments && (

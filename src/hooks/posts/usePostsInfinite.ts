@@ -7,6 +7,7 @@ export interface Post {
   postType: POST_TYPES
   text: string
   contractorName: string
+  commentsCount: number
   username: string | null
   userId: number | null
   location: string
@@ -14,6 +15,7 @@ export interface Post {
   updatedAt: string
   category: POST_CATEGORIES
   rate: number
+  likedBy: string[]
   _id: string
 }
 

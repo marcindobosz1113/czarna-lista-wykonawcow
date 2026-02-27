@@ -38,7 +38,7 @@ export const LoginPanel = () => {
             { type: 'email', message: 'Podaj prawidłowy adres email' },
           ]}
         >
-          <Input />
+          <Input placeholder="twoj@email.com" />
         </Form.Item>
 
         <Form.Item<FieldType>
@@ -47,7 +47,7 @@ export const LoginPanel = () => {
           name="password"
           rules={[{ required: true, message: 'Podaj hasło' }]}
         >
-          <Input.Password />
+          <Input.Password placeholder="*********" />
         </Form.Item>
 
         <Form.Item<FieldType>
