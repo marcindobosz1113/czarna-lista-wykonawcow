@@ -58,24 +58,25 @@ export const Homepage = () => {
         )}
 
         {showFilters && (
-          <Row justify="end">
-            <Button type="primary" onClick={clearSearch} size="large">
-              Wyczyść filtry
-            </Button>
-          </Row>
-        )}
-        {showFilters && (
-          <Row justify="end">
-            <Space>
-              {contractorName && (
-                <ContractorNameBadge contractorName={contractorName} />
-              )}
+          <>
+            <Row justify="end">
+              <Button type="primary" onClick={clearSearch} size="large">
+                Wyczyść filtry
+              </Button>
+            </Row>
 
-              {category && <PostCategoryBadge category={category} />}
+            <Row justify="end">
+              <Space className={styles.filters}>
+                {contractorName && (
+                  <ContractorNameBadge contractorName={contractorName} />
+                )}
 
-              {postType && <PostTypeBadge postType={postType} />}
-            </Space>
-          </Row>
+                {category && <PostCategoryBadge category={category} />}
+
+                {postType && <PostTypeBadge postType={postType} />}
+              </Space>
+            </Row>
+          </>
         )}
 
         <Row className={styles.postsContainer} justify="center">

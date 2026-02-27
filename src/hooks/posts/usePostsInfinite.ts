@@ -1,23 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { api } from '@/api/client'
 import type { POST_CATEGORIES, POST_TYPES } from '@/layout/homepage/types'
-
-export interface Post {
-  images: string[]
-  postType: POST_TYPES
-  text: string
-  contractorName: string
-  commentsCount: number
-  username: string | null
-  userId: number | null
-  location: string
-  createdAt: string
-  updatedAt: string
-  category: POST_CATEGORIES
-  rate: number
-  likedBy: string[]
-  _id: string
-}
+import type { Post } from '@/types/post'
 
 export interface PostsResponse {
   page: number
@@ -36,7 +20,6 @@ export const usePostsInfinite = (
   useInfiniteQuery({
     queryKey: ['posts', sort, search, category, type, contractorName],
     queryFn: async ({ pageParam = 1 }) => {
-      console.log({ category })
       const categoryQuery = category ? `&category=${category}` : ''
       const sortQuery = sort ? `&sort=${sort}` : ''
       const searchQuery = search ? `&search=${search}` : ''

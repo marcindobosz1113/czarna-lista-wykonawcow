@@ -22,12 +22,13 @@ import { PostTypeBadge } from '@/components/PostTypeBadge'
 import { POST_TYPES } from '@/layout/homepage/types'
 import { PostCategoryBadge } from '@/components/PostCategoryBadge'
 import { useBreakpoint } from '@/hooks/breakpoints/useBreakpoints'
-import type { Post } from '@/hooks/posts/usePostsInfinite'
 import { Link } from '@tanstack/react-router'
 import type { Comment } from '@/hooks/comments/useGetComments'
 import { useCreateComment } from '@/hooks/comments/useCreateComment'
 import { useAuth } from '@/store/auth'
 import { useLikePost } from '@/hooks/posts/useLikePost'
+import { RemovePostWithModal } from '@/layout/postPage/removePostWithModal/RemovePostWithModal'
+import type { Post } from '@/types/post'
 
 const TEXT_MAX_LENGTH = 200
 
@@ -205,22 +206,42 @@ export const PostCard = ({
 
         <Divider size="small" />
 
-        <Row gutter={20}>
-          <Col>
-            <Button onClick={handleLikePost}>
-              <LikeFilled className={liked ? styles.likedPostIcon : ''} />
-              {liked ? 'Polubiono' : 'Polub'} ({likesCount})
-            </Button>
+        <Row justify="space-between">
+          <Col className={styles.leftSideButtons}>
+            <Row gutter={10}>
+              <Col>
+                <Button onClick={handleLikePost} type="primary">
+                  <LikeFilled className={liked ? styles.likedPostIcon : ''} />
+                  {liked ? 'Polubiono' : 'Polub'} ({likesCount})
+                </Button>
+              </Col>
+
+              {!hideCommentButton && (
+                <Col>
+                  <Button type="primary">
+                    <Link
+                      className={styles.linkToPost}
+                      to={`/posts/${post._id}`}
+                    >
+                      <CommentOutlined className={styles.commentIcon} />{' '}
+                      Komentarze ({post.commentsCount})
+                    </Link>
+                  </Button>
+                </Col>
+              )}
+            </Row>
           </Col>
 
-          {!hideCommentButton && (
+          {post.userId === userId && (
             <Col>
-              <Button>
-                <Link className={styles.linkToPost} to={`/posts/${post._id}`}>
-                  <CommentOutlined className={styles.commentIcon} /> Komentarze
-                  ({post.commentsCount})
-                </Link>
-              </Button>
+              <Row gutter={10}>
+                <Col>
+                  <Button type="primary">Edytuj post</Button>
+                </Col>
+                <Col>
+                  <RemovePostWithModal postId={post._id} />
+                </Col>
+              </Row>
             </Col>
           )}
         </Row>

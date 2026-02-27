@@ -1,4 +1,4 @@
-@use '@/styles/variables.scss' as *;
+@use '@/styles/_variables.scss' as *;
 
 .menu {
   z-index: 999;
@@ -42,5 +42,5 @@
 
 .menuItemLabel {
   font-size: 2rem;
-  color: $primary;
+  color: $white;
 }

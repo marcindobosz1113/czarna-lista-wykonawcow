@@ -2,7 +2,7 @@ import { Button, Col, Row, Space } from 'antd'
 import { POST_TYPES } from '@/layout/homepage/types'
 import { useSearch } from '@/store/search'
 import { typesLabels, postTypesDotStyles } from '@/layout/homepage/constants'
-import styles from '../filters/Filters.module.scss'
+import styles from './Filters.module.scss'
 
 export const PostTypesFilters = () => {
   const { postType: currentPostType, setPostType } = useSearch()
@@ -16,7 +16,7 @@ export const PostTypesFilters = () => {
     setPostType(postType)
   }
 
-  const isCategoryActive = (postType: POST_TYPES) =>
+  const isPostTypeActive = (postType: POST_TYPES) =>
     currentPostType === postType
 
   return (
@@ -29,7 +29,7 @@ export const PostTypesFilters = () => {
         {Object.values(POST_TYPES).map((postType) => (
           <Button
             key={postType}
-            className={`${styles.category} ${isCategoryActive(postType) ? styles.active : ''}`}
+            className={`${styles.category} ${isPostTypeActive(postType) ? styles.active : ''}`}
             onClick={() => handleClick(postType)}
           >
             <div className={styles.dot} style={postTypesDotStyles[postType]} />

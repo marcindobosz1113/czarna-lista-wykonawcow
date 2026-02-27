@@ -1,4 +1,5 @@
-@use '@/styles/variables.scss' as *;
+@use '@/styles/_variables.scss' as *;
+@use '@/styles/_mixins.scss' as *;
 
 .backButton {
   margin: 2rem 0;
@@ -7,7 +8,7 @@
 .container {
   margin: 0 auto;
 
-  @media (max-width: 1200px) {
+  @include mq-down('xl') {
     width: 100%;
   }
 }

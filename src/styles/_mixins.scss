@@ -1,0 +1,24 @@
+@use 'sass:map';
+@use '@/styles/_variables.scss' as *;
+
+@mixin mq-up($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+}
+
+@mixin mq-down($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (max-width: (map.get($breakpoints, $breakpoint) - 1px)) {
+      @content;
+    }
+  }
+}
+
+@mixin mq-between($lower, $upper) {
+  @media (min-width: map.get($breakpoints, $lower)) and (max-width: (map.get($breakpoints, $upper) - 1px)) {
+    @content;
+  }
+}

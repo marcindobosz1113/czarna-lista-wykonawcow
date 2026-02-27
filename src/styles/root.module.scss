@@ -1,4 +1,5 @@
-@use '@/styles/variables.scss' as *;
+@use '@/styles/_variables.scss' as *;
+@use '@/styles/_mixins.scss' as *;
 
 .container {
   min-height: calc(100vh - $menu-height - $footer-height - 5rem);
@@ -6,7 +7,7 @@
   margin: 0 auto 5rem;
   padding: 0 2rem;
 
-  @media (max-width: 1200px) {
+  @include mq-down('xl') {
     display: flex;
     justify-content: center;
   }

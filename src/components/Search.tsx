@@ -9,9 +9,13 @@ const styles = {
 export const Search = () => {
   const { search, setSearch } = useSearch()
 
-  const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    router.navigate({ to: '/' })
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value)
+  }
+
+  const onSearch = (value: string) => {
+    setSearch(value)
+    router.navigate({ to: '/' })
   }
 
   return (
@@ -19,7 +23,8 @@ export const Search = () => {
       placeholder="Szukaj wykonawcy, firmy, miasta..."
       allowClear
       size="large"
-      onChange={onSearch}
+      onChange={onChange}
+      onSearch={onSearch}
       styles={styles}
       value={search}
     />

@@ -1,4 +1,4 @@
-@use '@/styles/variables.scss' as *;
+@use '@/styles/_variables.scss' as *;
 
 .categories {
   overflow: scroll;
@@ -6,11 +6,12 @@
 }
 
 .active {
-  background-color: $antd-primary;
-  color: $white;
+  background-color: $antd-primary !important;
+  color: $white !important;
 }
 
 .title {
   color: $gray;
   margin-bottom: 0.8rem;
+  font-weight: 600;
 }

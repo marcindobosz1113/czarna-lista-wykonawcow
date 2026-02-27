@@ -24,6 +24,7 @@ import {
 } from '@/layout/homepage/types'
 import { usePostsSort } from '@/store/postsSort'
 import { useSearch } from '@/store/search'
+import { useMostReported } from '@/hooks/ranking/useMostReported'
 
 type FieldType = {
   postType: string
@@ -44,6 +45,7 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
   const [postType, setPostType] = useState('')
   const { setSort } = usePostsSort()
   const { setSearch } = useSearch()
+  const { refetch: refetchMostReported } = useMostReported()
 
   const [form] = Form.useForm()
   const cretePost = useCreatePost()
@@ -74,6 +76,7 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
           form.resetFields()
           setImages([])
           setRate(1)
+          refetchMostReported()
           message.success('Post został dodany!')
         },
       }

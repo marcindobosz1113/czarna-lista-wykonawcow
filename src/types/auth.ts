@@ -9,7 +9,7 @@ export interface LoginResponse {
   token: string
   user: {
     email: string
-    id: string
+    _id: string
     username: string
   }
 }

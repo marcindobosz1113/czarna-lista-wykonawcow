@@ -1,9 +1,10 @@
-@use '@/styles/variables.scss' as *;
+@use '@/styles/_variables.scss' as *;
+@use '@/styles/mixins' as *;
 
 .homepageContainer {
   padding-top: 2rem;
 
-  @media (max-width: 1200px) {
+  @include mq-up('xl') {
     width: 100%;
   }
 }
@@ -22,4 +23,11 @@
 
 .sortSelect {
   min-width: 20rem;
+}
+
+.filters {
+  background-color: $white;
+  box-shadow: $container-box-shadow;
+  border-radius: 0.8rem;
+  padding: 1rem;
 }
