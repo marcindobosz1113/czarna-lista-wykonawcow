@@ -42,8 +42,12 @@ export const Homepage = () => {
                 value: SORT_TYPES.MOST_COMENTED,
                 label: 'Najwięcej komentarzy',
               },
-              { value: SORT_TYPES.MOST_RATED, label: 'Najlepiej oceniane' },
-              { value: SORT_TYPES.LESS_RATED, label: 'Najgorzej oceniane' },
+              {
+                value: SORT_TYPES.MOST_LICKED,
+                label: 'Najwięcej polubień',
+              },
+              { value: SORT_TYPES.MOST_RATED, label: 'Najlepsze oceny' },
+              { value: SORT_TYPES.LESS_RATED, label: 'Najgorsze oceny' },
             ]}
             placeholder="Sortowanie"
             value={sort}

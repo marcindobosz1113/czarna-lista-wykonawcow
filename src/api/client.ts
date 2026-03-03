@@ -59,6 +59,26 @@ export const api = {
     return res.json()
   },
 
+  put: async <TResponse, TBody>(
+    url: string,
+    body?: TBody
+  ): Promise<PromiseResponse<TResponse>> => {
+    const token = useAuth.getState().token
+
+    const isFormData = body instanceof FormData
+
+    const res = await fetch(import.meta.env.VITE_API_URL + url, {
+      method: 'PUT',
+      headers: {
+        ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+        Authorization: token ? `Bearer ${token}` : '',
+      },
+      body: isFormData ? body : JSON.stringify(body),
+    })
+
+    return res.json()
+  },
+
   delete: async <T>(url: string): Promise<PromiseResponse<T>> => {
     const token = useAuth.getState().token
 

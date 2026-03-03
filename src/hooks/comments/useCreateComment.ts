@@ -1,6 +1,6 @@
 import { api } from '@/api/client'
 import { useMutation } from '@tanstack/react-query'
-import { message } from 'antd'
+import { notification } from 'antd'
 
 interface CommentData {
   postId: string
@@ -21,6 +21,8 @@ export const useCreateComment = () =>
       return response
     },
     onError: () => {
-      message.error('Coś poszło nie tak podczas dodawania komentarza.')
+      notification.error({
+        title: 'Coś poszło nie tak podczas dodawania komentarza',
+      })
     },
   })

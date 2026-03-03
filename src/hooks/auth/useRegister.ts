@@ -1,7 +1,7 @@
+import { notification } from 'antd'
 import { useMutation } from '@tanstack/react-query'
 import { api } from '../../api/client'
 import { router } from '../../app/router'
-import { message } from 'antd'
 
 export interface RegisterPayload {
   email: string
@@ -15,13 +15,13 @@ export const useRegister = () => {
 
     onSuccess: () => {
       router.navigate({ to: '/login' })
-      message.success('Kotno zostało utworzone')
+      notification.success({ title: 'Kotno zostało utworzone' })
     },
     onError: (error) => {
       console.error(error)
 
       if (error.message) {
-        message.error(error.message)
+        notification.error({ title: error.message })
       }
     },
   })

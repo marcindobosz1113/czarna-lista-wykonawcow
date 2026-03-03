@@ -17,6 +17,7 @@ export enum SORT_TYPES {
   NEWEST = 'newest',
   OLDEST = 'oldest',
   MOST_COMENTED = 'mostComented',
+  MOST_LICKED = 'mostLicked',
   MOST_RATED = 'mostRated',
   LESS_RATED = 'lessRated',
 }

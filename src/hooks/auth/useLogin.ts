@@ -1,4 +1,4 @@
-import { message } from 'antd'
+import { notification } from 'antd'
 import { api } from '@/api/client'
 import { router } from '@/app/router'
 import { useAuth } from '@/store/auth'
@@ -24,7 +24,9 @@ export const useLogin = () => {
       router.navigate({ to: '/' })
     },
     onError: (error) => {
-      message.error(error.message)
+      notification.error({
+        title: error.message,
+      })
     },
   })
 }

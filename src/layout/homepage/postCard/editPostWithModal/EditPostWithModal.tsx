@@ -1,23 +1,23 @@
 import { useState } from 'react'
 import { Button, Modal } from 'antd'
-import { NewPostForm } from '@/layout/homepage/newPostButtonWithModal/newPostForm/NewPostForm'
+import { EditPostForm } from '@/layout/homepage/postCard/editPostWithModal/editPostForm/EditPostForm'
+import type { Post } from '@/types/post'
 
-export const NewPostButtonWithModal = () => {
+export const EditPostWithModal = ({ post }: { post: Post }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
     <>
-      <Button type="primary" onClick={() => setIsModalOpen(true)} size="large">
-        Dodaj post
-      </Button>
+      <Button onClick={() => setIsModalOpen(true)}>Edytuj post</Button>
 
       <Modal
-        title="Zgłoś wykonawcę"
+        title="Usuwanie posta"
         centered
         open={isModalOpen}
         confirmLoading={false}
         onCancel={() => setIsModalOpen(false)}
-        footer={() => <></>}
+        footer={<></>}
+        destroyOnHidden
         width={{
           xs: '90%',
           sm: '80%',
@@ -27,7 +27,7 @@ export const NewPostButtonWithModal = () => {
           xxl: '40%',
         }}
       >
-        <NewPostForm setIsModalOpen={setIsModalOpen} />
+        <EditPostForm setIsModalOpen={setIsModalOpen} post={post} />
       </Modal>
     </>
   )

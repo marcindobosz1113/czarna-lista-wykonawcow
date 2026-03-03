@@ -5,7 +5,7 @@ import {
   Divider,
   Image,
   Input,
-  message,
+  notification,
   Rate,
   Row,
   Space,
@@ -17,18 +17,20 @@ import {
   CommentOutlined,
   LikeFilled,
   EnvironmentOutlined,
+  LikeOutlined,
 } from '@ant-design/icons'
 import { PostTypeBadge } from '@/components/PostTypeBadge'
 import { POST_TYPES } from '@/layout/homepage/types'
 import { PostCategoryBadge } from '@/components/PostCategoryBadge'
 import { useBreakpoint } from '@/hooks/breakpoints/useBreakpoints'
-import { Link } from '@tanstack/react-router'
+import { Link, useRouterState } from '@tanstack/react-router'
 import type { Comment } from '@/hooks/comments/useGetComments'
 import { useCreateComment } from '@/hooks/comments/useCreateComment'
 import { useAuth } from '@/store/auth'
 import { useLikePost } from '@/hooks/posts/useLikePost'
-import { RemovePostWithModal } from '@/layout/postPage/removePostWithModal/RemovePostWithModal'
+import { RemovePostWithModal } from '@/layout/homepage/postCard/removePostWithModal/RemovePostWithModal'
 import type { Post } from '@/types/post'
+import { EditPostWithModal } from '@/layout/homepage/postCard/editPostWithModal/EditPostWithModal'
 
 const TEXT_MAX_LENGTH = 200
 
@@ -67,23 +69,29 @@ export const PostCard = ({
     location,
     category,
   } = post
+
+  const {
+    location: { pathname },
+  } = useRouterState()
+
   const userId = useAuth((state) => state.user?._id)
   const commentUsername = useAuth((state) => state.user?.username)
 
-  const isPostLiked = post.likedBy?.includes(userId ?? '')
-
   const [expanded, setExpanded] = useState(false)
   const [commentText, setCommentText] = useState('')
-  const [liked, setLiked] = useState(isPostLiked)
-  const [likesCount, setLikesCount] = useState(post.likedBy?.length)
+  const [liked, setLiked] = useState(post.likedBy?.includes(userId ?? ''))
+  const [likesCount, setLikesCount] = useState(post.likesCount || 0)
 
   const { isMobile } = useBreakpoint()
 
   const createComment = useCreateComment()
   const likePost = useLikePost()
 
-  const isLong = text.length > TEXT_MAX_LENGTH
-  const displayText = expanded ? text : text.slice(0, TEXT_MAX_LENGTH)
+  const isOnPostsList = pathname === '/'
+
+  const isLong = text.length > TEXT_MAX_LENGTH && isOnPostsList
+  const displayText =
+    expanded || !isOnPostsList ? text : text.slice(0, TEXT_MAX_LENGTH)
 
   const isQuestionTypePost = postType === POST_TYPES.QUESTION
 
@@ -98,7 +106,9 @@ export const PostCard = ({
       {
         onSuccess: () => {
           refetchComments?.()
-          message.success('Komentarz został dodany!')
+          notification.success({
+            title: 'Komentarz został dodany!',
+          })
           setCommentText('')
         },
       }
@@ -107,7 +117,9 @@ export const PostCard = ({
 
   const handleLikePost = () => {
     if (!userId) {
-      message.error('Zaloguj się aby potwierdzić.')
+      notification.error({
+        title: 'Zaloguj się aby polubić post',
+      })
       return
     }
 
@@ -187,11 +199,16 @@ export const PostCard = ({
 
         {!!images.length && (
           <Row>
-            <Space>
+            <Col className={styles.imagesWrapper}>
               {images.map((imageUrl) => (
-                <Image width={100} alt="basic" src={imageUrl} />
+                <Image
+                  width={150}
+                  alt="image"
+                  src={imageUrl}
+                  style={{ borderRadius: 8 }}
+                />
               ))}
-            </Space>
+            </Col>
           </Row>
         )}
 
@@ -208,17 +225,21 @@ export const PostCard = ({
 
         <Row justify="space-between">
           <Col className={styles.leftSideButtons}>
-            <Row gutter={10}>
+            <Row>
               <Col>
-                <Button onClick={handleLikePost} type="primary">
-                  <LikeFilled className={liked ? styles.likedPostIcon : ''} />
-                  {liked ? 'Polubiono' : 'Polub'} ({likesCount})
+                <Button type="text" onClick={handleLikePost}>
+                  {liked ? (
+                    <LikeFilled className={styles.likedPostIcon} />
+                  ) : (
+                    <LikeOutlined />
+                  )}
+                  {liked ? 'Polubiono' : 'Lubię to!'} ({likesCount})
                 </Button>
               </Col>
 
               {!hideCommentButton && (
                 <Col>
-                  <Button type="primary">
+                  <Button type="text">
                     <Link
                       className={styles.linkToPost}
                       to={`/posts/${post._id}`}
@@ -232,11 +253,11 @@ export const PostCard = ({
             </Row>
           </Col>
 
-          {post.userId === userId && (
+          {post.userId && post.userId === userId && (
             <Col>
               <Row gutter={10}>
                 <Col>
-                  <Button type="primary">Edytuj post</Button>
+                  <EditPostWithModal post={post} />
                 </Col>
                 <Col>
                   <RemovePostWithModal postId={post._id} />

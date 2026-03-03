@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, message, Modal } from 'antd'
+import { Button, Modal, notification } from 'antd'
 import { useRemovePost } from '@/hooks/posts/useRemovePost'
 import { router } from '@/app/router'
 import { useRouterState } from '@tanstack/react-router'
@@ -40,11 +40,15 @@ export const RemovePostWithModal = ({ postId }: { postId: string }) => {
             router.navigate({ to: '/' })
           }
 
-          message.success('Post został usunięty.')
+          notification.success({
+            title: 'Post został usunięty',
+          })
         },
         onError: () => {
           setIsModalOpen(false)
-          message.error('Coś poszło nie tak podczas usuwania posta.')
+          notification.error({
+            title: 'Coś poszło nie tak podczas usuwania posta',
+          })
         },
       }
     )
@@ -52,9 +56,7 @@ export const RemovePostWithModal = ({ postId }: { postId: string }) => {
 
   return (
     <>
-      <Button type="primary" onClick={() => setIsModalOpen(true)}>
-        Usuń post
-      </Button>
+      <Button onClick={() => setIsModalOpen(true)}>Usuń post</Button>
 
       <Modal
         title="Usuwanie posta"

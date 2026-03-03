@@ -4,7 +4,7 @@ import {
   Col,
   Form,
   Input,
-  message,
+  notification,
   Rate,
   Row,
   Select,
@@ -77,7 +77,9 @@ export const NewPostForm = ({ setIsModalOpen }: NewPostFormProps) => {
           setImages([])
           setRate(1)
           refetchMostReported()
-          message.success('Post został dodany!')
+          notification.success({
+            title: 'Post został dodany!',
+          })
         },
       }
     )

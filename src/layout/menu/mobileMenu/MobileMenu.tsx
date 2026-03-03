@@ -4,9 +4,9 @@ import {
   Row,
   Avatar,
   Dropdown,
-  message,
   Space,
   type MenuProps,
+  notification,
 } from 'antd'
 import { useRouterState } from '@tanstack/react-router'
 import styles from './mobileMenu.module.scss'
@@ -28,7 +28,9 @@ export const MobileMenu = () => {
 
   const onLogout = () => {
     logout()
-    message.success('Zostałeś wylogowany')
+    notification.success({
+      title: 'Zostałeś wylogowany',
+    })
   }
 
   const navigateToLogin = () => {

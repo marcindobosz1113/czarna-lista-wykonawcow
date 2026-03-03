@@ -1,19 +1,23 @@
-import { useMutation } from '@tanstack/react-query'
-import { api } from '../../api/client'
-import { notification } from 'antd'
+import { api } from '@/api/client'
 import type { PostData } from '@/hooks/types'
+import { useMutation } from '@tanstack/react-query'
 
-export const useCreatePost = () => {
-  return useMutation({
+interface UpdatePostData extends PostData {
+  existingImages: string[]
+}
+
+export const useUpdatePost = (postId: string) =>
+  useMutation({
     mutationFn: ({
       contractorName,
       text,
       images,
+      existingImages,
       location,
       rate,
       postType,
       category,
-    }: PostData) => {
+    }: UpdatePostData) => {
       const formData = new FormData()
       formData.append('postType', postType)
       formData.append('contractorName', contractorName)
@@ -21,20 +25,14 @@ export const useCreatePost = () => {
       formData.append('location', location)
       formData.append('rate', String(rate))
       formData.append('category', category)
+      formData.append('existingImages', JSON.stringify(existingImages))
 
       images.forEach((image) => {
         formData.append('images', image)
       })
 
-      const response = api.post('/api/posts', formData)
+      const response = api.put(`/api/posts/${postId}`, formData)
 
       return response
     },
-
-    onError: () => {
-      notification.error({
-        title: 'Coś poszło nie tak podczas dodawania posta',
-      })
-    },
   })
-}

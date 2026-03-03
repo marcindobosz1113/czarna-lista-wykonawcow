@@ -1,9 +1,11 @@
-import { message, type MenuProps } from 'antd'
+import { notification, type MenuProps } from 'antd'
 import { useAuth } from '../../store/auth'
 
 const onLogout = () => {
   useAuth.getState().logout()
-  message.success('Zostałeś wylogowany')
+  notification.success({
+    title: 'Zostałeś wylogowany',
+  })
 }
 
 export const loggedUserDropdownItems: MenuProps['items'] = [

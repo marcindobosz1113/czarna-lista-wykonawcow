@@ -1,18 +1,19 @@
 import type { POST_CATEGORIES, POST_TYPES } from '@/layout/homepage/types'
 
 export interface Post {
-  images: string[]
-  postType: POST_TYPES
-  text: string
-  contractorName: string
-  commentsCount: number
-  username: string | null
-  userId: string | null
-  location: string
-  createdAt: string
-  updatedAt: string
   category: POST_CATEGORIES
-  rate: number
+  commentsCount: number
+  contractorName: string
+  createdAt: string
+  images: string[]
   likedBy: string[]
+  likesCount: number
+  location: string
+  postType: POST_TYPES
+  rate: number
+  text: string
+  updatedAt: string
+  userId: string | null
+  username: string | null
   _id: string
 }

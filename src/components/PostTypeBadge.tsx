@@ -18,14 +18,14 @@ const badgeStyles = {
 
 const styles = {
   [POST_TYPES.REPORT]: {
-    background: '#FFF5F5',
+    background: '#ffe2e2',
     color: '#E13D3D',
   },
   [POST_TYPES.APPROVAL]: {
-    background: '#eafaeb',
-    color: '#20df49',
+    background: '#d9ffdc',
+    color: '#15dd40',
   },
-  [POST_TYPES.QUESTION]: { background: '#FFFBEB', color: '#dfbf31' },
+  [POST_TYPES.QUESTION]: { background: '#fff9e0', color: '#dbb922' },
 }
 
 export const PostTypeBadge = ({
